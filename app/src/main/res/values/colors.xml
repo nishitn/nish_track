@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="primary_10">#001b3c</color>
+    <color name="primary_40">#035eb0</color>
+    <color name="primary_90">#d3e3ff</color>
+    <color name="primary_100">#ffffff</color>
+
+    <color name="secondary_10">#121c2b</color>
+    <color name="secondary_40">#555f71</color>
+    <color name="secondary_90">#d9e3f9</color>
+    <color name="secondary_100">#ffffff</color>
+
+    <color name="neutral_10">#1b1b1d</color>
+    <color name="neutral_40">#555f71</color>
+    <color name="neutral_99">#fdfbff</color>
+    <color name="neutral_100">#ffffff</color>
+
+    <color name="primary">@color/primary_40</color>
+    <color name="onPrimary">@color/primary_100</color>
+    <color name="primaryContainer">@color/primary_90</color>
+    <color name="onPrimaryContainer">@color/primary_10</color>
+
+    <color name="secondary">@color/secondary_40</color>
+    <color name="onSecondary">@color/secondary_100</color>
+    <color name="secondaryContainer">@color/secondary_90</color>
+    <color name="onSecondaryContainer">@color/secondary_10</color>
+
+    <color name="background">@color/neutral_99</color>
+    <color name="onBackground">@color/neutral_10</color>
+    <color name="surface">@color/neutral_99</color>
+    <color name="onSurface">@color/neutral_10</color>
+
+    <color name="surface2">#14035eb0</color>
+
+</resources>

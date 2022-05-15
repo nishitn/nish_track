@@ -1,0 +1,12 @@
+{
+    "users": [
+        {
+            "id": "us_2cb8c35e-3644-4094-9c78-86260b13ab31",
+            "label": "Family"
+        },
+        {
+            "id": "us_4058f0e0-b05d-46e4-b6a0-b463682d7608",
+            "label": "Friends"
+        }
+    ]
+}

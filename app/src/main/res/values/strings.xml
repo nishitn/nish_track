@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">nishTrack</string>
+    <string name="day_month_placeholder">04 MAR</string>
+    <string name="dow_placeholder">WED</string>
+    <string name="currency_placeholder">\u20B9</string>
+</resources>

@@ -1,0 +1,16 @@
+{
+    "accounts": [
+        {
+            "id": "ac_e7493ab3-4f9e-4d6f-bd55-5045dd286710",
+            "label": "Canara Bank"
+        },
+        {
+            "id": "ac_c0751554-7998-4fd6-8d24-37a6ad970749",
+            "label": "PayTM"
+        },
+        {
+            "id": "ec_60a1ff2e-dc72-46e1-9bce-9e2d77395e3c",
+            "label": "Cash"
+        }
+    ]
+}

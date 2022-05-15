@@ -1,0 +1,16 @@
+{
+    "transactions": [
+        {
+            "id": "tr_ce3843ea-6f69-4b54-9ff7-39e4bdd87be0",
+            "date": "2022-05-01T12:25:43.000",
+            "chapter": "ch_d95f3a1a-c206-4141-9993-449c0765450a",
+            "categories": [
+                "cg_2ef4c7f9-0cf2-41de-8ef8-ed67ae53915c",
+                "cg_3f13bee1-ae06-4cef-82d5-c2c16f38b2b9"
+            ],
+            "note": "Foundation",
+            "currency": "INR",
+            "amount": 2200.00
+        }
+    ]
+}
