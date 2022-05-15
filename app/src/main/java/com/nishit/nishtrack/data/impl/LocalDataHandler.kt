@@ -5,8 +5,6 @@ import com.nishit.nishtrack.data.DataStore
 import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.DataList
 import com.nishit.nishtrack.dtos.DataUnit
-import com.nishit.nishtrack.dtos.impl.Chapters
-import com.nishit.nishtrack.dtos.impl.Transactions
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
 
@@ -19,18 +17,6 @@ object LocalDataHandler : DataHandler {
     }
 
     override fun getDataByDataType(dataType: DataType): DataList {
-        return when (dataType) {
-            DataType.Chapter -> getChapters()
-            DataType.Transaction -> getTransactions()
-            else -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
-        }
-    }
-
-    private fun getChapters(): Chapters {
-        return dataStore.readChapters()
-    }
-
-    private fun getTransactions(): Transactions {
-        return dataStore.readTransactions()
+        return dataStore.getDataList(dataType)
     }
 }

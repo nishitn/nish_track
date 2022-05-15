@@ -1,10 +1,8 @@
 package com.nishit.nishtrack.data
 
-import com.nishit.nishtrack.dtos.impl.Chapters
-import com.nishit.nishtrack.dtos.impl.Transactions
+import com.nishit.nishtrack.dtos.DataList
+import com.nishit.nishtrack.model.enums.DataType
 
 interface DataStore {
-    fun readChapters(): Chapters
-
-    fun readTransactions(): Transactions
+    fun getDataList(dataType: DataType): DataList
 }

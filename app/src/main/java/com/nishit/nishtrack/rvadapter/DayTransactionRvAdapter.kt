@@ -35,13 +35,10 @@ class DayTransactionRvAdapter(
     }
 
     override fun onBindViewHolder(holder: DayTransactionViewHolder, position: Int) {
-        val date = LocalDate.of(selectedYearMonth.year, selectedYearMonth.month, position + 1)
+        val date = LocalDate.of(selectedYearMonth.year, selectedYearMonth.month,
+            selectedYearMonth.lengthOfMonth() - position)
         val daysTransactions =
             transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }.toList()
-
-        if (daysTransactions.isEmpty()) {
-            return
-        }
 
         val dayMonthText = "${date.dayOfMonth} ${date.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}"
         val transactionAdapter = TransactionRvAdapter(daysTransactions)

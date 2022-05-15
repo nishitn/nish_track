@@ -13,7 +13,7 @@ import java.time.YearMonth
 class MonthTransactionsFragment : Fragment(R.layout.transaction_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val selectedYearMonth = BundleUtil.getYearMonthFromBundle(savedInstanceState)
+        val selectedYearMonth = BundleUtil.getYearMonthFromBundle(arguments)
             ?: throw GeneratedException("Year Month arguments were not passed")
 
         val dayTransactionAdapter = DayTransactionRvAdapter(selectedYearMonth)
