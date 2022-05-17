@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NishTrack" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.NishTrack" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
@@ -17,7 +17,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-    
+
     <style name="Display.Small" parent="Theme.NishTrack">
         <item name="android:textSize">36sp</item>
         <item name="lineHeight">44sp</item>
@@ -31,22 +31,28 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Title.Large" parent="Theme.NishTrack">
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
     <style name="Body.Small" parent="Theme.NishTrack">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:lineHeight">16sp</item>
         <item name="android:letterSpacing">0.02</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
     <style name="Body.Medium" parent="Theme.NishTrack">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:lineHeight">20sp</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
     <style name="Label.Large" parent="Theme.NishTrack">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:lineHeight">20sp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:fontWeight">500</item>

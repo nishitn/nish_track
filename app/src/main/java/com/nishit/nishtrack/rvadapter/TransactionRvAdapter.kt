@@ -36,6 +36,9 @@ class TransactionRvAdapter(
 
         holder.itemView.apply {
             categoryTv.text = getCategoryText(transactionItem.categories)
+            noteTv.text = transactionItem.note
+            currencyTv.text = transactionItem.currency.symbol
+            amountTv.text = transactionItem.amount.toString()
         }
     }
 

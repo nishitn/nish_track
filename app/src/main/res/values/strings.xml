@@ -3,4 +3,6 @@
     <string name="day_month_placeholder">04 MAR</string>
     <string name="dow_placeholder">WED</string>
     <string name="currency_placeholder">\u20B9</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="back_arrow_description">Back</string>
 </resources>

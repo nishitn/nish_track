@@ -1,30 +1,25 @@
 package com.nishit.nishtrack
 
-import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.nishit.nishtrack.util.BundleUtil
-import kotlinx.android.synthetic.main.backdrop_view.*
 import java.time.YearMonth
 
-class HomeBackDropActivity : AppCompatActivity() {
+class AddOrUpdateTransactionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        instance = this
         setContentView(R.layout.backdrop_view)
         val selectedYearMonth = BundleUtil.getYearMonthFromBundle(savedInstanceState) ?: YearMonth.now()
 
         setGlanceLayer()
         setFrontLayerFragment(selectedYearMonth)
-        setFabFunction()
     }
 
     private fun setGlanceLayer() {
-        val homeGlanceFragment = HomeGlanceFragment()
+        val addTransactionGlanceFragment = AddTransactionGlanceFragment()
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.glanceLayer, homeGlanceFragment)
+            replace(R.id.glanceLayer, addTransactionGlanceFragment)
             commit()
         }
     }
@@ -37,21 +32,6 @@ class HomeBackDropActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frontLayer, monthTransactionsFragment)
             commit()
-        }
-    }
-
-    private fun setFabFunction() {
-        addTransactionFab.setOnClickListener {
-            val intent = Intent(this, AddOrUpdateTransactionActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    companion object {
-        protected lateinit var instance: HomeBackDropActivity
-
-        fun getResources(): Resources? {
-            return instance.resources
         }
     }
 }
