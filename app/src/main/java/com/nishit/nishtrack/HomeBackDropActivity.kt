@@ -48,7 +48,7 @@ class HomeBackDropActivity : AppCompatActivity() {
     }
 
     companion object {
-        protected lateinit var instance: HomeBackDropActivity
+        private lateinit var instance: HomeBackDropActivity
 
         fun getResources(): Resources? {
             return instance.resources

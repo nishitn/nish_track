@@ -3,13 +3,9 @@ package com.nishit.nishtrack
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.simple_appbar.*
 
-class AddTransactionGlanceFragment : Fragment(R.layout.simple_appbar) {
+class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appBarBackArrow.setOnClickListener {
-            requireActivity().finish()
-        }
     }
 }

@@ -1,18 +1,18 @@
 package com.nishit.nishtrack
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.nishit.nishtrack.util.BundleUtil
-import java.time.YearMonth
+import kotlinx.android.synthetic.main.backdrop_view.*
 
 class AddOrUpdateTransactionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.backdrop_view)
-        val selectedYearMonth = BundleUtil.getYearMonthFromBundle(savedInstanceState) ?: YearMonth.now()
 
         setGlanceLayer()
-        setFrontLayerFragment(selectedYearMonth)
+        setFrontLayerFragment()
+        hideFab()
     }
 
     private fun setGlanceLayer() {
@@ -24,14 +24,18 @@ class AddOrUpdateTransactionActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFrontLayerFragment(selectedYearMonth: YearMonth) {
-        val monthTransactionsFragment = MonthTransactionsFragment().apply {
-            arguments = MonthTransactionsFragment.createBundle(selectedYearMonth)
-        }
+    private fun setFrontLayerFragment() {
+        val addOrUpdateInputFragment = AddOrUpdateInputFragment()
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frontLayer, monthTransactionsFragment)
+            replace(R.id.frontLayer, addOrUpdateInputFragment)
             commit()
+        }
+    }
+
+    private fun hideFab() {
+        addTransactionFab.apply {
+            visibility = View.INVISIBLE
         }
     }
 }
