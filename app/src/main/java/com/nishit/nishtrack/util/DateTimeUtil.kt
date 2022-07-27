@@ -6,7 +6,7 @@ import java.time.LocalTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class DateTimeFormatUtil {
+class DateTimeUtil {
     companion object {
         private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MMM-yy")
 
@@ -14,21 +14,34 @@ class DateTimeFormatUtil {
 
         private val timeFormatH12: DateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
 
-        private val timeFormatH24: DateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm")
+        private val timeFormatH24: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+
+        private fun getTimeFormatter(timeFormat: Int): DateTimeFormatter {
+            return when (timeFormat) {
+                TimeFormat.CLOCK_24H -> timeFormatH24
+                else -> timeFormatH12
+            }
+        }
 
         fun formatDate(date: LocalDate): String {
             return dateFormat.format(date)
         }
 
         fun formatTime(time: LocalTime, timeFormat: Int = TimeFormat.CLOCK_24H): String {
-            return when (timeFormat) {
-                TimeFormat.CLOCK_24H -> timeFormatH24.format(time)
-                else -> timeFormatH12.format(time)
-            }
+            return getTimeFormatter(timeFormat).format(time)
         }
 
         fun formatYearMonth(yearMonth: YearMonth): String {
             return yearMonthFormat.format(yearMonth)
+        }
+
+        fun readDate(dateString: String): LocalDate {
+            return LocalDate.parse(dateString, dateFormat)
+        }
+
+        fun readTime(timeString: String, timeFormat: Int = TimeFormat.CLOCK_24H): LocalTime {
+            return LocalTime.parse(timeString, getTimeFormatter(timeFormat))
         }
     }
 }

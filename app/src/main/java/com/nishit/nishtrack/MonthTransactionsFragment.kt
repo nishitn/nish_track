@@ -26,10 +26,7 @@ class MonthTransactionsFragment : Fragment(R.layout.transaction_list) {
 
     companion object {
         fun createBundle(yearMonth: YearMonth): Bundle {
-            val bundle = Bundle()
-            bundle.putInt("year", yearMonth.year)
-            bundle.putInt("month", yearMonth.monthValue)
-            return bundle
+            return BundleUtil.createYearMonthBundle(yearMonth)
         }
     }
 }

@@ -5,21 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nishit.nishtrack.R
-import com.nishit.nishtrack.data.DataHandler
-import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.impl.Transaction
-import com.nishit.nishtrack.model.enums.DataType
-import com.nishit.nishtrack.model.enums.Separator
+import com.nishit.nishtrack.util.DataUnitUtil
 import kotlinx.android.synthetic.main.transaction_item.view.*
-import org.apache.commons.lang3.StringUtils
 
 class TransactionRvAdapter(
     transactionItems: List<Transaction>
 ) : RecyclerView.Adapter<TransactionRvAdapter.TransactionViewHolder>() {
     inner class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private val dataHandler: DataHandler = LocalDataHandler
     private val sortedTransactions: List<Transaction> =
         transactionItems.sortedByDescending { transaction -> transaction.date }
 
@@ -35,7 +29,7 @@ class TransactionRvAdapter(
         val transactionItem = sortedTransactions[position]
 
         holder.itemView.apply {
-            categoryTv.text = getCategoryText(transactionItem.categories)
+            categoryTv.text = DataUnitUtil.getCategoryText(transactionItem.categories)
             noteTv.text = transactionItem.note
             currencyTv.text = transactionItem.currency.symbol
             amountTv.text = transactionItem.amount.toString()
@@ -44,11 +38,5 @@ class TransactionRvAdapter(
 
     override fun getItemCount(): Int {
         return sortedTransactions.size
-    }
-
-    private fun getCategoryText(categoryIds: List<DataId>): String {
-        val categoryNames =
-            categoryIds.map { categoryId -> dataHandler.getDataUnitById(categoryId, DataType.Category).label }
-        return StringUtils.join(categoryNames, Separator.CategorySeparator.separator)
     }
 }

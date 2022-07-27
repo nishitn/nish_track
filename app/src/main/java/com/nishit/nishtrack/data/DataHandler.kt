@@ -8,5 +8,7 @@ import com.nishit.nishtrack.model.enums.DataType
 interface DataHandler {
     fun getDataUnitById(id: DataId, dataType: DataType): DataUnit
 
+    fun getDataUnitOrNullById(id: DataId, dataType: DataType): DataUnit?
+
     fun getDataByDataType(dataType: DataType): DataList
 }

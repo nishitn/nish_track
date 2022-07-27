@@ -16,6 +16,10 @@ object LocalDataHandler : DataHandler {
             ?: throw GeneratedException("No Data Unit of type: ${dataType.name} found with ID: $id")
     }
 
+    override fun getDataUnitOrNullById(id: DataId, dataType: DataType): DataUnit? {
+        return getDataByDataType(dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
+    }
+
     override fun getDataByDataType(dataType: DataType): DataList {
         return dataStore.getDataList(dataType)
     }
