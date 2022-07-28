@@ -197,29 +197,20 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:gravity="bottom"
-                android:labelFor="@id/chapterRowET"
                 android:minWidth="90dp"
                 android:paddingBottom="10dp"
                 android:text="Chapter" />
 
-            <EditText
-                android:id="@+id/chapterRowET"
+            <Button
+                android:id="@+id/chapterRowBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/chapterRowTV"
-                android:background="@null"
-                android:importantForAutofill="no"
-                android:inputType="text" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignStart="@id/chapterRowET"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
-                android:background="@color/onSurface" />
+                android:gravity="start|center_vertical"
+                android:text="Chapter"
+                android:textAllCaps="false" />
 
         </RelativeLayout>
 
@@ -237,29 +228,20 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:gravity="bottom"
-                android:labelFor="@id/accountRowET"
                 android:minWidth="90dp"
                 android:paddingBottom="10dp"
                 android:text="Account" />
 
-            <EditText
-                android:id="@+id/accountRowET"
+            <Button
+                android:id="@+id/accountRowBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/accountRowTV"
-                android:background="@null"
-                android:importantForAutofill="no"
-                android:inputType="text" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignStart="@id/accountRowET"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
-                android:background="@color/onSurface" />
+                android:gravity="start|center_vertical"
+                android:text="Account"
+                android:textAllCaps="false" />
 
         </RelativeLayout>
 
@@ -277,29 +259,20 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:gravity="bottom"
-                android:labelFor="@id/categoryRowET"
                 android:minWidth="90dp"
                 android:paddingBottom="10dp"
                 android:text="Category" />
 
-            <EditText
-                android:id="@+id/categoryRowET"
+            <Button
+                android:id="@+id/categoryRowBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/categoryRowTV"
-                android:background="@null"
-                android:importantForAutofill="no"
-                android:inputType="text" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignStart="@id/categoryRowET"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
-                android:background="@color/onSurface" />
+                android:gravity="start|center_vertical"
+                android:text="Category"
+                android:textAllCaps="false" />
 
         </RelativeLayout>
 

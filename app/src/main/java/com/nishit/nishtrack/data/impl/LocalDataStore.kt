@@ -6,6 +6,7 @@ import com.nishit.nishtrack.HomeBackDropActivity
 import com.nishit.nishtrack.data.DataStore
 import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.DataList
+import com.nishit.nishtrack.dtos.impl.Accounts
 import com.nishit.nishtrack.dtos.impl.Categories
 import com.nishit.nishtrack.dtos.impl.Chapters
 import com.nishit.nishtrack.dtos.impl.Transactions
@@ -33,6 +34,7 @@ object LocalDataStore : DataStore {
             DataType.Category -> Paths.get(basePath.pathString, "category.json")
             DataType.Chapter -> Paths.get(basePath.pathString, "chapter.json")
             DataType.Transaction -> Paths.get(basePath.pathString, "transaction.json")
+            DataType.Account -> Paths.get(basePath.pathString, "account.json")
             else -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
         }
 
@@ -52,6 +54,7 @@ object LocalDataStore : DataStore {
             DataType.Category -> gson.fromJson(jsonString, Categories::class.java)
             DataType.Chapter -> gson.fromJson(jsonString, Chapters::class.java)
             DataType.Transaction -> gson.fromJson(jsonString, Transactions::class.java)
+            DataType.Account -> gson.fromJson(jsonString, Accounts::class.java)
             else -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
         }
     }

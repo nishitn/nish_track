@@ -6,9 +6,9 @@ import com.nishit.nishtrack.dtos.DataUnit
 import com.nishit.nishtrack.model.enums.DataType
 
 interface DataHandler {
-    fun getDataUnitById(id: DataId, dataType: DataType): DataUnit
+    fun getDataUnitById(id: DataId): DataUnit
 
-    fun getDataUnitOrNullById(id: DataId, dataType: DataType): DataUnit?
+    fun getDataUnitOrNullById(id: DataId): DataUnit?
 
     fun getDataByDataType(dataType: DataType): DataList
 }

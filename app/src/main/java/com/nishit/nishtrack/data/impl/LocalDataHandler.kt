@@ -11,13 +11,13 @@ import com.nishit.nishtrack.model.exceptions.GeneratedException
 object LocalDataHandler : DataHandler {
     private val dataStore: DataStore = LocalDataStore
 
-    override fun getDataUnitById(id: DataId, dataType: DataType): DataUnit {
-        return getDataByDataType(dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
-            ?: throw GeneratedException("No Data Unit of type: ${dataType.name} found with ID: $id")
+    override fun getDataUnitById(id: DataId): DataUnit {
+        return getDataByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
+            ?: throw GeneratedException("No Data Unit of type: ${id.dataType.name} found with ID: $id")
     }
 
-    override fun getDataUnitOrNullById(id: DataId, dataType: DataType): DataUnit? {
-        return getDataByDataType(dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
+    override fun getDataUnitOrNullById(id: DataId): DataUnit? {
+        return getDataByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
     }
 
     override fun getDataByDataType(dataType: DataType): DataList {

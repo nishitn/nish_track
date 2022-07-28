@@ -28,9 +28,8 @@ class DayTransactionRvAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayTransactionViewHolder {
         transactions = getSelectedYearMonthsTransactions()
         return DayTransactionViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.day_transaction_item, parent, false
-            )
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.day_transaction_item, parent, false)
         )
     }
 
