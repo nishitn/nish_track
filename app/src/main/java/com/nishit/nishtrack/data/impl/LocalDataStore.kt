@@ -1,5 +1,7 @@
 package com.nishit.nishtrack.data.impl
 
+import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nishit.nishtrack.HomeBackDropActivity
@@ -16,11 +18,15 @@ import com.nishit.nishtrack.extension.LocalDateTimeTypeAdapter
 import com.nishit.nishtrack.model.enums.Currency
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
+import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 import java.time.LocalDateTime
 import kotlin.io.path.pathString
 
 object LocalDataStore : DataStore {
+    private const val TAG = "LocalDataStore"
+
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeTypeAdapter().nullSafe())
         .registerTypeAdapter(DataId::class.java, DataIdTypeAdapter().nullSafe())
@@ -42,10 +48,37 @@ object LocalDataStore : DataStore {
     }
 
     private fun readFileForDataType(dataType: DataType): String {
-        val resources = HomeBackDropActivity.getResources()!!
+        val context = HomeBackDropActivity.getContext()
         val filePath = getPathForDataType(dataType)
-        val bufferedReader = resources.assets.open(filePath).bufferedReader()
-        return bufferedReader.use { it.readText() }
+        try {
+            val file = context.getFileStreamPath(filePath)
+            if (file == null || !file.exists()) {
+                val assetFileIn = context.assets.open(filePath)
+                Files.copy(assetFileIn, file.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                assetFileIn.close()
+            }
+            val bufferedReader = context.openFileInput(filePath).bufferedReader()
+            return bufferedReader.use { it.readText() }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            return ""
+        }
+    }
+
+    private fun replaceFileForDataType(dataType: DataType, data: String): Boolean {
+        val context: Context = HomeBackDropActivity.getContext()
+        val filePath = getPathForDataType(dataType)
+        try {
+            context.openFileOutput(filePath, Context.MODE_PRIVATE).apply {
+                flush()
+                write(data.toByteArray())
+                close()
+            }
+            return true
+        } catch (ex: Exception) {
+            Log.e(TAG, "Error updating File {$filePath} for DataType {$dataType}", ex)
+            return false
+        }
     }
 
     override fun getDataList(dataType: DataType): DataList {
@@ -57,5 +90,17 @@ object LocalDataStore : DataStore {
             DataType.Account -> gson.fromJson(jsonString, Accounts::class.java)
             else -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
         }
+    }
+
+    override fun updateDataList(dataList: DataList): Boolean {
+        val data = when(dataList.dataType) {
+            DataType.Transaction -> gson.toJson(dataList, Transactions::class.java)
+            DataType.Chapter -> gson.toJson(dataList, Chapters::class.java)
+            DataType.Category -> gson.toJson(dataList, Categories::class.java)
+            DataType.Account -> gson.toJson(dataList, Accounts::class.java)
+            DataType.User -> gson.toJson(dataList)
+        }
+
+        return replaceFileForDataType(dataList.dataType, data)
     }
 }

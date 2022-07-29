@@ -23,10 +23,13 @@ class DayTransactionRvAdapter(
     inner class DayTransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val dataHandler: DataHandler = LocalDataHandler
-    private lateinit var transactions: List<Transaction>
+    private var transactions: List<Transaction>
+
+    init {
+        transactions = getSelectedYearMonthsTransactions()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayTransactionViewHolder {
-        transactions = getSelectedYearMonthsTransactions()
         return DayTransactionViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.day_transaction_item, parent, false)
@@ -34,26 +37,44 @@ class DayTransactionRvAdapter(
     }
 
     override fun onBindViewHolder(holder: DayTransactionViewHolder, position: Int) {
-        val date = LocalDate.of(selectedYearMonth.year, selectedYearMonth.month,
-            selectedYearMonth.lengthOfMonth() - position)
-        val daysTransactions =
-            transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }.toList()
+        val date = LocalDate.of(
+            selectedYearMonth.year, selectedYearMonth.month,
+            selectedYearMonth.lengthOfMonth() - position
+        )
 
+        setItemDayDetails(holder, date)
+        setItemTransactionsList(holder, date)
+    }
+
+    override fun getItemCount(): Int {
+        return selectedYearMonth.lengthOfMonth()
+    }
+
+    private fun setItemDayDetails(holder: DayTransactionViewHolder, date: LocalDate) {
         val dayMonthText = "${date.dayOfMonth} ${date.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}"
-        val transactionAdapter = TransactionRvAdapter(daysTransactions)
 
         holder.itemView.apply {
             dayMonthTv.text = dayMonthText
             dowTv.text = date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-            transactionItems.apply {
+        }
+    }
+
+    private fun setItemTransactionsList(holder: DayTransactionViewHolder, date: LocalDate) {
+        val daysTransactions =
+            transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }.toList()
+
+        val transactionAdapter = TransactionRvAdapter(daysTransactions)
+
+        holder.itemView.apply {
+            transactionItemsRv.apply {
                 adapter = transactionAdapter
                 layoutManager = LinearLayoutManager(context)
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        return selectedYearMonth.lengthOfMonth()
+    fun updateTransactions() {
+        transactions = getSelectedYearMonthsTransactions()
     }
 
     private fun getSelectedYearMonthsTransactions(): List<Transaction> {

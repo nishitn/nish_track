@@ -5,6 +5,8 @@ import com.nishit.nishtrack.data.DataStore
 import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.DataList
 import com.nishit.nishtrack.dtos.DataUnit
+import com.nishit.nishtrack.dtos.impl.Transaction
+import com.nishit.nishtrack.dtos.impl.Transactions
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
 
@@ -22,5 +24,20 @@ object LocalDataHandler : DataHandler {
 
     override fun getDataByDataType(dataType: DataType): DataList {
         return dataStore.getDataList(dataType)
+    }
+
+    override fun addOrUpdateDataList(newDataUnit: DataUnit): Boolean {
+        val dataList = dataStore.getDataList(newDataUnit.dataType)
+        when (newDataUnit.dataType) {
+            DataType.Transaction -> addOrUpdateTransactions(dataList, newDataUnit)
+            else -> throw GeneratedException("")
+        }
+        return dataStore.updateDataList(dataList)
+    }
+
+    private fun addOrUpdateTransactions(dataList: DataList, newDataUnit: DataUnit) {
+        dataList as Transactions
+        dataList.dataUnits.removeIf { dataUnit -> dataUnit.id == newDataUnit.id }
+        dataList.dataUnits.add(newDataUnit as Transaction)
     }
 }

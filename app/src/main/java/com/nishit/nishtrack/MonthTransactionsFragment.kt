@@ -1,6 +1,8 @@
 package com.nishit.nishtrack
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,20 +13,33 @@ import kotlinx.android.synthetic.main.transaction_list.*
 import java.time.YearMonth
 
 class MonthTransactionsFragment : Fragment(R.layout.transaction_list) {
+    private lateinit var dayTransactionAdapter: DayTransactionRvAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val selectedYearMonth = BundleUtil.getYearMonthFromBundle(arguments)
             ?: throw GeneratedException("Year Month arguments were not passed")
 
-        val dayTransactionAdapter = DayTransactionRvAdapter(selectedYearMonth)
+        dayTransactionAdapter = DayTransactionRvAdapter(selectedYearMonth)
 
+        Log.i(TAG, "DayTransactionRvAdapter adapter apply started")
         dayTransactionsRv.apply {
             adapter = dayTransactionAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+        Log.i(TAG, "DayTransactionRvAdapter adapter apply completed")
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        dayTransactionAdapter.updateTransactions()
+        dayTransactionAdapter.notifyDataSetChanged()
+        super.onResume()
     }
 
     companion object {
+        private const val TAG = "MonthTransactionsFragment"
+
         fun createBundle(yearMonth: YearMonth): Bundle {
             return BundleUtil.createYearMonthBundle(yearMonth)
         }

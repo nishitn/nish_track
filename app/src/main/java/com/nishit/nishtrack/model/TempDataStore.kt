@@ -3,6 +3,7 @@ package com.nishit.nishtrack.model
 import com.nishit.nishtrack.dtos.impl.Account
 import com.nishit.nishtrack.dtos.impl.Category
 import com.nishit.nishtrack.dtos.impl.Chapter
+import com.nishit.nishtrack.model.enums.Currency
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -12,7 +13,9 @@ class TempDataStore {
     var category: Category? = null
     var date: LocalDate? = null
     var time: LocalTime? = null
-    var note: String? = null
-    var description: String? = null
-    var amount: Double = 0.0
+    var currency: Currency = Currency.INR
+
+    fun isValid(): Boolean {
+        return chapter != null && account != null && category != null && date != null && time != null
+    }
 }

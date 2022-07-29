@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.simple_appbar.*
 class AddTransactionGlanceFragment : Fragment(R.layout.simple_appbar) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appBarBackArrow.setOnClickListener {
+        leftClickableRegion.setOnClickListener {
             requireActivity().finish()
         }
     }

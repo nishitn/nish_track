@@ -12,7 +12,7 @@ class AddOrUpdateTransactionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.backdrop_view)
-        val selectedDataId = BundleUtil.getSelectedDataIdFromBundle(savedInstanceState)
+        val selectedDataId = BundleUtil.getSelectedDataIdFromBundle(intent.extras)
             ?: DataId(DataType.Transaction)
 
         setGlanceLayer()
