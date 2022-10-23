@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <item
+        android:id="@+id/transactionsPageItem"
+        android:enabled="true"
+        android:icon="@drawable/person_icon"
+        android:title="Transactions" />
+
+    <item
+        android:id="@+id/settingsPageItem"
+        android:enabled="true"
+        android:icon="@drawable/person_icon"
+        android:title="Settings" />
+
+</menu>

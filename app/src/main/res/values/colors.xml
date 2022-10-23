@@ -39,5 +39,6 @@
     <color name="onSurface">@color/neutral_10</color>
 
     <color name="surface2">#14035eb0</color>
+    <color name="surfaceVariant">#e0e2eb</color>
 
 </resources>
