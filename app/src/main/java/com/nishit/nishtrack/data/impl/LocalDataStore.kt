@@ -81,7 +81,7 @@ object LocalDataStore : DataStore {
         }
     }
 
-    override fun getDataList(dataType: DataType): DataList {
+    override fun getDataListByDataType(dataType: DataType): DataList {
         val jsonString = readFileForDataType(dataType)
         return when (dataType) {
             DataType.Category -> gson.fromJson(jsonString, Categories::class.java)

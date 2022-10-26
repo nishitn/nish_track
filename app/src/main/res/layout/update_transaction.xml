@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/addOrUpdateTransactionCL"
+    android:id="@+id/updateTransactionCL"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:padding="8dp">
 
     <LinearLayout
-        android:id="@+id/addOrUpdateTransactionFirstLL"
+        android:id="@+id/updateTransactionFirstLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/transaction_item_background"
@@ -25,12 +25,8 @@
 
             <TextView
                 android:id="@+id/dateRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:minWidth="90dp"
-                android:text="Date" />
+                style="@style/UpdateField.InputRowLabel"
+                android:text="@string/date" />
 
             <Button
                 android:id="@+id/dateRowBtn"
@@ -59,35 +55,25 @@
 
             <TextView
                 android:id="@+id/amountRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowLabel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:gravity="bottom"
                 android:labelFor="@id/amountRowET"
-                android:minWidth="90dp"
-                android:paddingBottom="10dp"
-                android:text="Amount" />
+                android:text="@string/amount" />
 
             <EditText
                 android:id="@+id/amountRowET"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowET"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/amountRowTV"
-                android:background="@null"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                style="@style/UpdateField.InputRowETUnderline"
                 android:layout_alignStart="@id/amountRowET"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
-                android:background="@color/onSurface" />
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 
@@ -99,35 +85,25 @@
 
             <TextView
                 android:id="@+id/noteRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowLabel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:gravity="bottom"
                 android:labelFor="@id/noteRowET"
-                android:minWidth="90dp"
-                android:paddingBottom="10dp"
-                android:text="Note" />
+                android:text="@string/note" />
 
             <EditText
                 android:id="@+id/noteRowET"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowET"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/noteRowTV"
-                android:background="@null"
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                style="@style/UpdateField.InputRowETUnderline"
                 android:layout_alignStart="@id/noteRowET"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
-                android:background="@color/onSurface" />
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 
@@ -139,42 +115,32 @@
 
             <TextView
                 android:id="@+id/descriptionRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowLabel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:gravity="bottom"
                 android:labelFor="@id/descriptionRowET"
-                android:minWidth="90dp"
-                android:paddingBottom="10dp"
-                android:text="Description" />
+                android:text="@string/description" />
 
             <EditText
                 android:id="@+id/descriptionRowET"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowET"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/descriptionRowTV"
-                android:background="@null"
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                style="@style/UpdateField.InputRowETUnderline"
                 android:layout_alignStart="@id/descriptionRowET"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
-                android:background="@color/onSurface" />
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/addOrUpdateTransactionSecondLL"
+        android:id="@+id/updateTransactionSecondLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -182,7 +148,7 @@
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addOrUpdateTransactionFirstLL">
+        app:layout_constraintTop_toBottomOf="@id/updateTransactionFirstLL">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -191,26 +157,18 @@
 
             <TextView
                 android:id="@+id/chapterRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowLabel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:gravity="bottom"
-                android:minWidth="90dp"
-                android:paddingBottom="10dp"
-                android:text="Chapter" />
+                android:text="@string/chapter" />
 
             <Button
                 android:id="@+id/chapterRowBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowBtn"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/chapterRowTV"
-                android:gravity="start|center_vertical"
-                android:text="Chapter"
-                android:textAllCaps="false" />
+                android:text="@string/chapter" />
 
         </RelativeLayout>
 
@@ -222,26 +180,18 @@
 
             <TextView
                 android:id="@+id/accountRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowLabel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:gravity="bottom"
-                android:minWidth="90dp"
-                android:paddingBottom="10dp"
-                android:text="Account" />
+                android:text="@string/account" />
 
             <Button
                 android:id="@+id/accountRowBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowBtn"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/accountRowTV"
-                android:gravity="start|center_vertical"
-                android:text="Account"
-                android:textAllCaps="false" />
+                android:text="@string/account" />
 
         </RelativeLayout>
 
@@ -253,41 +203,30 @@
 
             <TextView
                 android:id="@+id/categoryRowTV"
-                style="@style/Label.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowLabel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:gravity="bottom"
-                android:minWidth="90dp"
-                android:paddingBottom="10dp"
-                android:text="Category" />
+                android:text="@string/category" />
 
             <Button
                 android:id="@+id/categoryRowBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowBtn"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/categoryRowTV"
-                android:gravity="start|center_vertical"
-                android:text="Category"
-                android:textAllCaps="false" />
+                android:text="@string/category" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/addOrUpdateTransactionSaveBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:padding="16dp"
-        android:text="SAVE"
+        android:id="@+id/updateTransactionSaveBtn"
+        style="@style/UpdateField.SaveBtn"
+        android:text="@string/saveBtnText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addOrUpdateTransactionSecondLL" />
+        app:layout_constraintTop_toBottomOf="@id/updateTransactionSecondLL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

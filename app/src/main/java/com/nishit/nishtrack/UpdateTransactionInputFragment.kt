@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.nishit.nishtrack.data.DataHandler
@@ -21,13 +22,12 @@ import com.nishit.nishtrack.model.exceptions.GeneratedException
 import com.nishit.nishtrack.util.BundleUtil
 import com.nishit.nishtrack.util.DataUnitUtil
 import com.nishit.nishtrack.util.DateTimeUtil
-import kotlinx.android.synthetic.main.add_or_update_transaction.*
+import kotlinx.android.synthetic.main.update_transaction.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import kotlin.concurrent.thread
 
-class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
+class UpdateTransactionInputFragment : Fragment(R.layout.update_transaction) {
     private val dataHandler: DataHandler = LocalDataHandler
     private val tempDataStore = TempDataStore()
 
@@ -40,36 +40,29 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
         Log.i(TAG, "Updating Input Fields's texts")
         updateInputFields()
 
-        thread {
-            Log.i(TAG, "Date Input's behaviour creation started")
-            setDateInputBehaviour()
-            Log.i(TAG, "Date Input's behaviour creation complete")
-        }
-        thread {
-            Log.i(TAG, "Time Input's behaviour creation started")
-            setTimeInputBehaviour()
-            Log.i(TAG, "Time Input's behaviour creation complete")
-        }
-        thread {
-            Log.i(TAG, "Category Input's behaviour creation started")
-            setCategoryInputBehaviour()
-            Log.i(TAG, "Category Input's behaviour creation complete")
-        }
-        thread {
-            Log.i(TAG, "Chapter Input's behaviour creation started")
-            setChapterInputBehaviour()
-            Log.i(TAG, "Chapter Input's behaviour creation complete")
-        }
-        thread {
-            Log.i(TAG, "Account Input's behaviour creation started")
-            setAccountInputBehaviour()
-            Log.i(TAG, "Account Input's behaviour creation complete")
-        }
-        thread {
-            Log.i(TAG, "Save Button's behaviour creation started")
-            setSaveBtnBehaviour(selectedDataId)
-            Log.i(TAG, "Save Button's behaviour creation complete")
-        }
+        Log.i(TAG, "Date Input's behaviour creation started")
+        setDateInputBehaviour()
+        Log.i(TAG, "Date Input's behaviour creation complete")
+
+        Log.i(TAG, "Time Input's behaviour creation started")
+        setTimeInputBehaviour()
+        Log.i(TAG, "Time Input's behaviour creation complete")
+
+        Log.i(TAG, "Category Input's behaviour creation started")
+        setCategoryInputBehaviour()
+        Log.i(TAG, "Category Input's behaviour creation complete")
+
+        Log.i(TAG, "Chapter Input's behaviour creation started")
+        setChapterInputBehaviour()
+        Log.i(TAG, "Chapter Input's behaviour creation complete")
+
+        Log.i(TAG, "Account Input's behaviour creation started")
+        setAccountInputBehaviour()
+        Log.i(TAG, "Account Input's behaviour creation complete")
+
+        Log.i(TAG, "Save Button's behaviour creation started")
+        setSaveBtnBehaviour(selectedDataId)
+        Log.i(TAG, "Save Button's behaviour creation complete")
     }
 
     private fun populateTempDataStore(selectedDataId: DataId) {
@@ -82,6 +75,9 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
             val transaction = dataUnit as Transaction
             tempDataStore.date = transaction.date.toLocalDate()
             tempDataStore.time = transaction.date.toLocalTime()
+            tempDataStore.amount = transaction.amount
+            tempDataStore.note = transaction.note
+            tempDataStore.description = transaction.description
             tempDataStore.chapter = dataHandler.getDataUnitById(transaction.chapter) as Chapter
             tempDataStore.account = dataHandler.getDataUnitById(transaction.account) as Account
             tempDataStore.category = dataHandler.getDataUnitById(transaction.categories[0]) as Category
@@ -131,7 +127,7 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
             }
 
             Log.i(TAG, "Loading Categories")
-            val allCategories = dataHandler.getDataByDataType(DataType.Category) as Categories
+            val allCategories = dataHandler.getDataListByDataType(DataType.Category) as Categories
             val availableCategoryIds = tempDataStore.chapter!!.hasCategories
             val availableCategories = allCategories.dataUnits
                 .filter { category -> availableCategoryIds.contains(category.id) }
@@ -148,7 +144,7 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
         val btn = chapterRowBtn
 
         btn.setOnClickListener {
-            val chapters = dataHandler.getDataByDataType(DataType.Chapter)
+            val chapters = dataHandler.getDataListByDataType(DataType.Chapter)
             val selectionDialog = SelectionDialogFragment(InputType.CHAPTER, chapters.dataUnits, dataTransferHelper)
             selectionDialog.show(requireActivity().supportFragmentManager, "SelectionDialog")
         }
@@ -158,14 +154,14 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
         val btn = accountRowBtn
 
         btn.setOnClickListener {
-            val accounts = dataHandler.getDataByDataType(DataType.Account)
+            val accounts = dataHandler.getDataListByDataType(DataType.Account)
             val selectionDialog = SelectionDialogFragment(InputType.ACCOUNT, accounts.dataUnits, dataTransferHelper)
             selectionDialog.show(requireActivity().supportFragmentManager, "SelectionDialog")
         }
     }
 
     private fun setSaveBtnBehaviour(transactionId: DataId) {
-        val btn = addOrUpdateTransactionSaveBtn
+        val btn = updateTransactionSaveBtn
 
         btn.setOnClickListener {
             Log.i(TAG, "Save Btn Clicked")
@@ -190,7 +186,7 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
                 description
             )
 
-            dataHandler.addOrUpdateDataList(transaction)
+            dataHandler.mergeDataUnit(transaction)
             requireActivity().finish()
         }
     }
@@ -202,12 +198,30 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
         updateBtnText(chapterRowBtn, InputType.CHAPTER, tempDataStore.chapter)
         updateBtnText(categoryRowBtn, InputType.CATEGORY, tempDataStore.category)
         updateBtnText(accountRowBtn, InputType.ACCOUNT, tempDataStore.account)
+
+        updateInputFieldText(amountRowET, tempDataStore.amount)
+        updateInputFieldText(noteRowET, tempDataStore.note)
+        updateInputFieldText(descriptionRowET, tempDataStore.description)
     }
 
     private fun updateBtnText(btn: Button, inputType: InputType, data: DataUnit?) {
         btn.text = when (data) {
             null -> inputType.defaultText
             else -> DataUnitUtil.getDataUnitText(data)
+        }
+    }
+
+    private fun updateInputFieldText(inputField: EditText, data: String?) {
+        when (data) {
+            null -> Unit
+            else -> inputField.setText(data)
+        }
+    }
+
+    private fun updateInputFieldText(inputField: EditText, data: Double?) {
+        when (data) {
+            null -> Unit
+            else -> inputField.setText(data.toString())
         }
     }
 
@@ -243,7 +257,7 @@ class AddOrUpdateInputFragment : Fragment(R.layout.add_or_update_transaction) {
     }
 
     companion object {
-        private const val TAG: String = "AddOrUpdateInputFragment"
+        private const val TAG: String = "UpdateTransactionInputFragment"
 
         fun createBundle(selectedDataId: DataId): Bundle {
             return BundleUtil.createSelectedDataIdBundle(selectedDataId)

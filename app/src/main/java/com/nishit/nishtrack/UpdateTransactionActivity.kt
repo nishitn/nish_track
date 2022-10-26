@@ -8,7 +8,7 @@ import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.util.BundleUtil
 import kotlinx.android.synthetic.main.backdrop_view.*
 
-class AddOrUpdateTransactionActivity : AppCompatActivity() {
+class UpdateTransactionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.backdrop_view)
@@ -30,12 +30,12 @@ class AddOrUpdateTransactionActivity : AppCompatActivity() {
     }
 
     private fun setFrontLayerFragment(selectedDataId: DataId) {
-        val addOrUpdateInputFragment = AddOrUpdateInputFragment().apply {
-            arguments = AddOrUpdateInputFragment.createBundle(selectedDataId)
+        val updateTransactionInputFragment = UpdateTransactionInputFragment().apply {
+            arguments = UpdateTransactionInputFragment.createBundle(selectedDataId)
         }
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frontLayer, addOrUpdateInputFragment)
+            replace(R.id.frontLayer, updateTransactionInputFragment)
             commit()
         }
     }

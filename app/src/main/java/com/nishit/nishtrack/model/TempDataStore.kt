@@ -14,6 +14,9 @@ class TempDataStore {
     var date: LocalDate? = null
     var time: LocalTime? = null
     var currency: Currency = Currency.INR
+    var amount: Double? = null
+    var note: String? = null
+    var description: String? = null
 
     fun isValid(): Boolean {
         return chapter != null && account != null && category != null && date != null && time != null

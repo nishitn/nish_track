@@ -78,7 +78,7 @@ class DayTransactionRvAdapter(
     }
 
     private fun getSelectedYearMonthsTransactions(): List<Transaction> {
-        val allTransactions = dataHandler.getDataByDataType(DataType.Transaction) as Transactions
+        val allTransactions = dataHandler.getDataListByDataType(DataType.Transaction) as Transactions
         return allTransactions.dataUnits.filter { transaction ->
             transaction.date.month == selectedYearMonth.month && transaction.date.year == selectedYearMonth.year
         }

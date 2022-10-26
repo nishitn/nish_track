@@ -54,28 +54,28 @@ class HomeBackDropActivity : AppCompatActivity() {
             replace(R.id.frontLayer, monthTransactionsFragment)
             commit()
         }
-        Log.i(TAG, "MonthTransactionsFragment transaction started")
+        Log.i(TAG, "MonthTransactionsFragment transaction completed")
     }
 
     private fun setFrontLayerFragmentToSettings() {
         val settingsFragment = SettingsFragment()
 
-        Log.i(TAG, "MonthTransactionsFragment transaction started")
+        Log.i(TAG, "SettingsFragment transaction started")
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frontLayer, settingsFragment)
             commit()
         }
-        Log.i(TAG, "MonthTransactionsFragment transaction started")
+        Log.i(TAG, "SettingsFragment transaction completed")
     }
 
     private fun setFabBehaviour() {
         Log.i(TAG, "HomeFAB listener creation started")
         addTransactionFab.setOnClickListener {
             Log.i(TAG, "HomeFAB Button clicked")
-            Log.i(TAG, "AddOrUpdateTransactionActivity activity creation started")
-            val intent = Intent(this, AddOrUpdateTransactionActivity::class.java)
+            Log.i(TAG, "UpdateTransactionActivity activity creation started")
+            val intent = Intent(this, UpdateTransactionActivity::class.java)
             startActivity(intent)
-            Log.i(TAG, "AddOrUpdateTransactionActivity activity creation completed")
+            Log.i(TAG, "UpdateTransactionActivity activity creation completed")
         }
         Log.i(TAG, "HomeFAB listener creation completed")
     }
@@ -101,6 +101,9 @@ class HomeBackDropActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.transactionsPageItem -> {
                     setFrontLayerFragmentToMonthTransactions(YearMonth.now())
+                }
+                R.id.settingsPageItem -> {
+                    setFrontLayerFragmentToSettings()
                 }
             }
         }

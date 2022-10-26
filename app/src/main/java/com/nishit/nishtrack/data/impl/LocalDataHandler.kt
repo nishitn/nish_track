@@ -14,28 +14,28 @@ object LocalDataHandler : DataHandler {
     private val dataStore: DataStore = LocalDataStore
 
     override fun getDataUnitById(id: DataId): DataUnit {
-        return getDataByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
+        return getDataListByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
             ?: throw GeneratedException("No Data Unit of type: ${id.dataType.name} found with ID: $id")
     }
 
     override fun getDataUnitOrNullById(id: DataId): DataUnit? {
-        return getDataByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
+        return getDataListByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
     }
 
-    override fun getDataByDataType(dataType: DataType): DataList {
-        return dataStore.getDataList(dataType)
+    override fun getDataListByDataType(dataType: DataType): DataList {
+        return dataStore.getDataListByDataType(dataType)
     }
 
-    override fun addOrUpdateDataList(newDataUnit: DataUnit): Boolean {
-        val dataList = dataStore.getDataList(newDataUnit.dataType)
+    override fun mergeDataUnit(newDataUnit: DataUnit): Boolean {
+        val dataList = dataStore.getDataListByDataType(newDataUnit.dataType)
         when (newDataUnit.dataType) {
-            DataType.Transaction -> addOrUpdateTransactions(dataList, newDataUnit)
+            DataType.Transaction -> mergeTransactions(dataList, newDataUnit)
             else -> throw GeneratedException("")
         }
         return dataStore.updateDataList(dataList)
     }
 
-    private fun addOrUpdateTransactions(dataList: DataList, newDataUnit: DataUnit) {
+    private fun mergeTransactions(dataList: DataList, newDataUnit: DataUnit) {
         dataList as Transactions
         dataList.dataUnits.removeIf { dataUnit -> dataUnit.id == newDataUnit.id }
         dataList.dataUnits.add(newDataUnit as Transaction)

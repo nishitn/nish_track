@@ -5,4 +5,15 @@
     <string name="currency_placeholder">\u20B9</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="back_arrow_description">Back</string>
+    <string name="account">Account</string>
+    <string name="chapter">Chapter</string>
+    <string name="category">Category</string>
+    <string name="accounts">Accounts</string>
+    <string name="chapters">Chapters</string>
+    <string name="categories">Categories</string>
+    <string name="description">Description</string>
+    <string name="note">Note</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="saveBtnText">SAVE</string>
 </resources>
