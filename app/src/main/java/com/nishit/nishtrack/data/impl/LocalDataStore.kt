@@ -50,7 +50,7 @@ object LocalDataStore : DataStore {
     private fun readFileForDataType(dataType: DataType): String {
         val context = HomeBackDropActivity.getContext()
         val filePath = getPathForDataType(dataType)
-        try {
+        return try {
             val file = context.getFileStreamPath(filePath)
             if (file == null || !file.exists()) {
                 val assetFileIn = context.assets.open(filePath)
@@ -58,26 +58,26 @@ object LocalDataStore : DataStore {
                 assetFileIn.close()
             }
             val bufferedReader = context.openFileInput(filePath).bufferedReader()
-            return bufferedReader.use { it.readText() }
+            bufferedReader.use { it.readText() }
         } catch (ex: Exception) {
             ex.printStackTrace()
-            return ""
+            ""
         }
     }
 
     private fun replaceFileForDataType(dataType: DataType, data: String): Boolean {
         val context: Context = HomeBackDropActivity.getContext()
         val filePath = getPathForDataType(dataType)
-        try {
+        return try {
             context.openFileOutput(filePath, Context.MODE_PRIVATE).apply {
                 flush()
                 write(data.toByteArray())
                 close()
             }
-            return true
+            true
         } catch (ex: Exception) {
             Log.e(TAG, "Error updating File {$filePath} for DataType {$dataType}", ex)
-            return false
+            false
         }
     }
 

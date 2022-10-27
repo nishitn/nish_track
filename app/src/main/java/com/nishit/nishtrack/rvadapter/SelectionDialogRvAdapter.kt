@@ -30,7 +30,7 @@ class SelectionDialogRvAdapter(
         val item = dataUnits[position]
 
         holder.itemView.apply {
-            selectoionItemNameTv.text = item.label
+            selectionItemNameTv.text = item.label
         }
 
         holder.itemView.setOnClickListener {

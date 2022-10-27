@@ -2,12 +2,12 @@ package com.nishit.nishtrack.model.enums
 
 import com.nishit.nishtrack.model.exceptions.GeneratedException
 
-enum class DataType(val shortId: String, val heading: String) {
-    Transaction("tr", "Transactions"),
-    Chapter("ch", "Chapters"),
-    Category("cg", "Categories"),
-    Account("ac", "Accounts"),
-    User("us", "Users");
+enum class DataType(val shortId: String) {
+    Transaction("tr"),
+    Chapter("ch"),
+    Category("cg"),
+    Account("ac"),
+    User("us");
 
     companion object {
         fun getByShortId(shortId: String): DataType {

@@ -7,12 +7,12 @@
         android:id="@+id/transactionsPageItem"
         android:enabled="true"
         android:icon="@drawable/person_icon"
-        android:title="Transactions" />
+        android:title="@string/transactions" />
 
     <item
         android:id="@+id/settingsPageItem"
         android:enabled="true"
         android:icon="@drawable/person_icon"
-        android:title="Settings" />
+        android:title="@string/settings" />
 
 </menu>
