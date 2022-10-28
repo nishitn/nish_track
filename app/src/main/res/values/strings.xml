@@ -19,4 +19,7 @@
     <string name="transactions">Transactions</string>
     <string name="settings">Settings</string>
     <string name="label">Label</string>
+    <string name="placeholderText">Text</string>
+    <string name="placeholderDate_dd_mmm_yyyy">27 Jul 2022</string>
+    <string name="placeholderTime_hh_mm_a">10:43 AM</string>
 </resources>

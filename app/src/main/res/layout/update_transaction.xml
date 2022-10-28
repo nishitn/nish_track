@@ -26,13 +26,13 @@
                 android:id="@+id/dateRowBtn"
                 style="@style/UpdateField.InputRowBtn"
                 android:layout_weight="1"
-                android:text="27 Jul 2022" />
+                android:text="@string/placeholderDate_dd_mmm_yyyy" />
 
             <Button
                 android:id="@+id/timeRowBtn"
                 style="@style/UpdateField.InputRowBtn"
                 android:layout_weight="1"
-                android:text="10:43 AM" />
+                android:text="@string/placeholderTime_hh_mm_a" />
 
         </LinearLayout>
 

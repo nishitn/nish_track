@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/updateFieldItemText"
         style="@style/UpdateField.InputRowRVItemText"
-        android:text="Text"
+        android:text="@string/placeholderText"
         app:layout_constraintBottom_toTopOf="@id/updateFieldItemUnderline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
