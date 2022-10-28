@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/updateTransactionCL"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
+    android:layout_height="match_parent"
     android:padding="8dp">
 
     <LinearLayout
         android:id="@+id/updateTransactionFirstLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/transaction_item_background"
         android:orientation="vertical"
-        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
                 android:id="@+id/dateRowTV"
@@ -30,193 +24,109 @@
 
             <Button
                 android:id="@+id/dateRowBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/UpdateField.InputRowBtn"
                 android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
                 android:text="27 Jul 2022" />
 
             <Button
                 android:id="@+id/timeRowBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                style="@style/UpdateField.InputRowBtn"
                 android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
                 android:text="10:43 AM" />
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
                 android:id="@+id/amountRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:labelFor="@id/amountRowET"
                 android:text="@string/amount" />
 
             <EditText
                 android:id="@+id/amountRowET"
                 style="@style/UpdateField.InputRowET"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/amountRowTV"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal" />
 
-            <View
-                style="@style/UpdateField.InputRowETUnderline"
-                android:layout_alignStart="@id/amountRowET"
-                android:layout_alignParentBottom="true" />
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
                 android:id="@+id/noteRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:labelFor="@id/noteRowET"
                 android:text="@string/note" />
 
             <EditText
                 android:id="@+id/noteRowET"
                 style="@style/UpdateField.InputRowET"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/noteRowTV"
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
-            <View
-                style="@style/UpdateField.InputRowETUnderline"
-                android:layout_alignStart="@id/noteRowET"
-                android:layout_alignParentBottom="true" />
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
                 android:id="@+id/descriptionRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:labelFor="@id/descriptionRowET"
                 android:text="@string/description" />
 
             <EditText
                 android:id="@+id/descriptionRowET"
                 style="@style/UpdateField.InputRowET"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/descriptionRowTV"
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
-            <View
-                style="@style/UpdateField.InputRowETUnderline"
-                android:layout_alignStart="@id/descriptionRowET"
-                android:layout_alignParentBottom="true" />
+        </LinearLayout>
 
-        </RelativeLayout>
+        <LinearLayout style="@style/UpdateField.InputRowLL">
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/updateTransactionSecondLL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/transaction_item_background"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/updateTransactionFirstLL">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/chapterRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:text="@string/chapter" />
 
             <Button
                 android:id="@+id/chapterRowBtn"
                 style="@style/UpdateField.InputRowBtn"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/chapterRowTV"
                 android:text="@string/chapter" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
                 android:id="@+id/accountRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:text="@string/account" />
 
             <Button
                 android:id="@+id/accountRowBtn"
                 style="@style/UpdateField.InputRowBtn"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/accountRowTV"
                 android:text="@string/account" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+        <LinearLayout style="@style/UpdateField.InputRowLL">
+
 
             <TextView
                 android:id="@+id/categoryRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:text="@string/category" />
 
             <Button
                 android:id="@+id/categoryRowBtn"
                 style="@style/UpdateField.InputRowBtn"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/categoryRowTV"
                 android:text="@string/category" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -226,7 +136,6 @@
         android:text="@string/saveBtnText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/updateTransactionSecondLL" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

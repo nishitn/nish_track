@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.nishit.nishtrack.UpdateTransactionActivity
+import com.nishit.nishtrack.UpdateDataUnitActivity
 import com.nishit.nishtrack.R
 import com.nishit.nishtrack.dtos.impl.Transaction
 import com.nishit.nishtrack.util.DataUnitUtil
@@ -48,8 +48,8 @@ class TransactionRvAdapter(
             Log.i(TAG, "Transaction Item clicked")
 
             Log.i(TAG, "UpdateTransactionActivity activity creation started")
-            val intent = Intent(it.context, UpdateTransactionActivity::class.java)
-            intent.putExtras(UpdateTransactionActivity.createBundle(transactionItem.id))
+            val intent = Intent(it.context, UpdateDataUnitActivity::class.java)
+            intent.putExtras(UpdateDataUnitActivity.createBundle(transactionItem.id))
             it.context.startActivity(intent)
             Log.i(TAG, "UpdateTransactionActivity activity creation completed")
         }

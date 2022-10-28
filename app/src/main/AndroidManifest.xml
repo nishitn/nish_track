@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UpdateTransactionActivity"
+            android:name=".UpdateDataUnitActivity"
             android:exported="false" />
     </application>
 

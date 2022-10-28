@@ -41,7 +41,7 @@ class MonthTransactionsFragment : Fragment(R.layout.transaction_list) {
         private const val TAG = "MonthTransactionsFragment"
 
         fun createBundle(yearMonth: YearMonth): Bundle {
-            return BundleUtil.createYearMonthBundle(yearMonth)
+            return BundleUtil.addYearMonthToBundle(yearMonth)
         }
     }
 }

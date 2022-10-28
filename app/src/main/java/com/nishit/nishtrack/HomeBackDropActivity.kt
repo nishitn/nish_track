@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.util.BundleUtil
 import kotlinx.android.synthetic.main.backdrop_view.*
 import java.time.YearMonth
@@ -72,8 +73,9 @@ class HomeBackDropActivity : AppCompatActivity() {
         Log.i(TAG, "HomeFAB listener creation started")
         addTransactionFab.setOnClickListener {
             Log.i(TAG, "HomeFAB Button clicked")
-            Log.i(TAG, "UpdateTransactionActivity activity creation started")
-            val intent = Intent(this, UpdateTransactionActivity::class.java)
+            Log.i(TAG, "UpdateDataUnitActivity activity (Transactions) creation started")
+            val intent = Intent(this, UpdateDataUnitActivity::class.java)
+            intent.putExtras(UpdateDataUnitActivity.createBundle(DataType.Transaction))
             startActivity(intent)
             Log.i(TAG, "UpdateTransactionActivity activity creation completed")
         }
@@ -84,7 +86,7 @@ class HomeBackDropActivity : AppCompatActivity() {
         Log.i(TAG, "HomeFAB listener creation started")
         bottomNavView.setOnItemSelectedListener { item ->
             Log.i(TAG, "Bottom Nav Menu Item selected")
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.transactionsPageItem -> {
                     setFrontLayerFragmentToMonthTransactions(YearMonth.now())
                     true
@@ -98,13 +100,9 @@ class HomeBackDropActivity : AppCompatActivity() {
         }
         bottomNavView.setOnItemReselectedListener { item ->
             Log.i(TAG, "Bottom Nav Menu Item selected")
-            when(item.itemId) {
-                R.id.transactionsPageItem -> {
-                    setFrontLayerFragmentToMonthTransactions(YearMonth.now())
-                }
-                R.id.settingsPageItem -> {
-                    setFrontLayerFragmentToSettings()
-                }
+            when (item.itemId) {
+                R.id.transactionsPageItem -> setFrontLayerFragmentToMonthTransactions(YearMonth.now())
+                R.id.settingsPageItem -> setFrontLayerFragmentToSettings()
             }
         }
         Log.i(TAG, "HomeFAB listener creation completed")

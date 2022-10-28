@@ -1,4 +1,4 @@
-package com.nishit.nishtrack
+package com.nishit.nishtrack.updatedataunit.impl
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -8,7 +8,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import com.nishit.nishtrack.R
+import com.nishit.nishtrack.SelectionDialogFragment
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
@@ -19,6 +20,7 @@ import com.nishit.nishtrack.model.TempDataStore
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.enums.InputType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
+import com.nishit.nishtrack.updatedataunit.UpdateDataUnitFragment
 import com.nishit.nishtrack.util.BundleUtil
 import com.nishit.nishtrack.util.DataUnitUtil
 import com.nishit.nishtrack.util.DateTimeUtil
@@ -27,42 +29,25 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class UpdateTransactionInputFragment : Fragment(R.layout.update_transaction) {
+class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transaction) {
     private val dataHandler: DataHandler = LocalDataHandler
     private val tempDataStore = TempDataStore()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val selectedDataId = BundleUtil.getSelectedDataIdFromBundle(arguments) ?: DataId(DataType.Transaction)
+        val selectedDataId = BundleUtil.getDataIdFromBundle(arguments) ?: DataId(DataType.Transaction)
 
-        Log.i(TAG, "Populating TempDataStore")
         populateTempDataStore(selectedDataId)
-        Log.i(TAG, "Updating Input Fields's texts")
         updateInputFields()
 
-        Log.i(TAG, "Date Input's behaviour creation started")
         setDateInputBehaviour()
-        Log.i(TAG, "Date Input's behaviour creation complete")
-
-        Log.i(TAG, "Time Input's behaviour creation started")
         setTimeInputBehaviour()
-        Log.i(TAG, "Time Input's behaviour creation complete")
 
-        Log.i(TAG, "Category Input's behaviour creation started")
         setCategoryInputBehaviour()
-        Log.i(TAG, "Category Input's behaviour creation complete")
-
-        Log.i(TAG, "Chapter Input's behaviour creation started")
         setChapterInputBehaviour()
-        Log.i(TAG, "Chapter Input's behaviour creation complete")
-
-        Log.i(TAG, "Account Input's behaviour creation started")
         setAccountInputBehaviour()
-        Log.i(TAG, "Account Input's behaviour creation complete")
 
-        Log.i(TAG, "Save Button's behaviour creation started")
         setSaveBtnBehaviour(selectedDataId)
-        Log.i(TAG, "Save Button's behaviour creation complete")
     }
 
     private fun populateTempDataStore(selectedDataId: DataId) {
@@ -258,9 +243,5 @@ class UpdateTransactionInputFragment : Fragment(R.layout.update_transaction) {
 
     companion object {
         private const val TAG: String = "UpdateTransactionInputFragment"
-
-        fun createBundle(selectedDataId: DataId): Bundle {
-            return BundleUtil.createSelectedDataIdBundle(selectedDataId)
-        }
     }
 }
