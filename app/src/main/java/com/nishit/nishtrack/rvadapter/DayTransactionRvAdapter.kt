@@ -31,15 +31,13 @@ class DayTransactionRvAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayTransactionViewHolder {
         return DayTransactionViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.day_transaction_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.day_transaction_item, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: DayTransactionViewHolder, position: Int) {
         val date = LocalDate.of(
-            selectedYearMonth.year, selectedYearMonth.month,
-            selectedYearMonth.lengthOfMonth() - position
+            selectedYearMonth.year, selectedYearMonth.month, selectedYearMonth.lengthOfMonth() - position
         )
 
         setItemDayDetails(holder, date)

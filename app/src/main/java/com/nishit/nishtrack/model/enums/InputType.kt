@@ -6,7 +6,9 @@ enum class InputType(val heading: String, val defaultText: String) {
     CHAPTER("Chapter", "CHAPTER"),
     ACCOUNT("Accounts", "ACCOUNT"),
     CATEGORY("Category", "CATEGORY"),
-    TRANSACTION_TYPE("Transaction Type", "TRANSACTION TYPE"),
     AMOUNT("Amount", ""),
-    NOTE("Note", "")
+    NOTE("Note", ""),
+    DESCRIPTION("Description", ""),
+    CURRENCY("Currency", ""),
+    LABEL("Label", "")
 }

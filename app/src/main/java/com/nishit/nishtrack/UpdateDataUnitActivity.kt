@@ -1,7 +1,6 @@
 package com.nishit.nishtrack
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.nishit.nishtrack.dtos.DataId
@@ -11,12 +10,11 @@ import com.nishit.nishtrack.updatedataunit.UpdateDataUnitFragment
 import com.nishit.nishtrack.updatedataunit.impl.UpdateChapterFragment
 import com.nishit.nishtrack.updatedataunit.impl.UpdateTransactionFragment
 import com.nishit.nishtrack.util.BundleUtil
-import kotlinx.android.synthetic.main.backdrop_view.*
 
 class UpdateDataUnitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.backdrop_view)
+        setContentView(R.layout.update_data_unit_view)
 
         val dataIdFromBundle = BundleUtil.getDataIdFromBundle(intent.extras)
         val dataTypeFromBundle = BundleUtil.getDataTypeFromBundle(intent.extras)
@@ -29,14 +27,13 @@ class UpdateDataUnitActivity : AppCompatActivity() {
 
         setGlanceLayer()
         setFrontLayerFragment(selectedDataId)
-        hideFab()
     }
 
     private fun setGlanceLayer() {
         val addTransactionGlanceFragment = AddTransactionGlanceFragment()
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.glanceLayer, addTransactionGlanceFragment)
+            replace(R.id.duvGlanceLayer, addTransactionGlanceFragment)
             commit()
         }
     }
@@ -53,14 +50,8 @@ class UpdateDataUnitActivity : AppCompatActivity() {
         }
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frontLayer, updateDataUnitFragment)
+            replace(R.id.duvFrontLayer, updateDataUnitFragment)
             commit()
-        }
-    }
-
-    private fun hideFab() {
-        addTransactionFab.apply {
-            visibility = View.INVISIBLE
         }
     }
 

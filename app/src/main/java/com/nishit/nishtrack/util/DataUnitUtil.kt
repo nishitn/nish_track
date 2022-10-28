@@ -12,8 +12,7 @@ class DataUnitUtil {
         private val dataHandler: DataHandler = LocalDataHandler
 
         fun getCategoryText(categoryIds: List<DataId>): String {
-            val categoryNames =
-                categoryIds.map { categoryId -> dataHandler.getDataUnitById(categoryId).label }
+            val categoryNames = categoryIds.map { categoryId -> dataHandler.getDataUnitById(categoryId).label }
             return StringUtils.join(categoryNames, Separator.CategorySeparator.separator)
         }
 

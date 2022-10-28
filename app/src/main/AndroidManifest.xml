@@ -19,7 +19,8 @@
         </activity>
         <activity
             android:name=".UpdateDataUnitActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

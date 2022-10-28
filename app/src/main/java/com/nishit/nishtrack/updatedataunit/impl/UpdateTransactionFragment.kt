@@ -16,7 +16,7 @@ import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.DataUnit
 import com.nishit.nishtrack.dtos.impl.*
 import com.nishit.nishtrack.helper.DataTransferHelper
-import com.nishit.nishtrack.model.TempDataStore
+import com.nishit.nishtrack.model.enums.Currency
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.enums.InputType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
@@ -31,7 +31,7 @@ import java.time.LocalTime
 
 class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transaction) {
     private val dataHandler: DataHandler = LocalDataHandler
-    private val tempDataStore = TempDataStore()
+    private val inputDataMap: MutableMap<InputType, Any?> = mutableMapOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,18 +54,20 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         val dataUnit = dataHandler.getDataUnitOrNullById(selectedDataId)
         if (dataUnit == null) {
             val now = LocalDateTime.now()
-            tempDataStore.date = now.toLocalDate()
-            tempDataStore.time = now.toLocalTime()
+            inputDataMap[InputType.DATE] = now.toLocalDate()
+            inputDataMap[InputType.TIME] = now.toLocalTime()
+            inputDataMap[InputType.CURRENCY] = Currency.INR
         } else {
             val transaction = dataUnit as Transaction
-            tempDataStore.date = transaction.date.toLocalDate()
-            tempDataStore.time = transaction.date.toLocalTime()
-            tempDataStore.amount = transaction.amount
-            tempDataStore.note = transaction.note
-            tempDataStore.description = transaction.description
-            tempDataStore.chapter = dataHandler.getDataUnitById(transaction.chapter) as Chapter
-            tempDataStore.account = dataHandler.getDataUnitById(transaction.account) as Account
-            tempDataStore.category = dataHandler.getDataUnitById(transaction.categories[0]) as Category
+            inputDataMap[InputType.DATE] = transaction.date.toLocalDate()
+            inputDataMap[InputType.TIME] = transaction.date.toLocalTime()
+            inputDataMap[InputType.CURRENCY] = transaction.currency
+            inputDataMap[InputType.AMOUNT] = transaction.amount
+            inputDataMap[InputType.NOTE] = transaction.note
+            inputDataMap[InputType.DESCRIPTION] = transaction.description
+            inputDataMap[InputType.CHAPTER] = dataHandler.getDataUnitById(transaction.chapter)
+            inputDataMap[InputType.ACCOUNT] = dataHandler.getDataUnitById(transaction.account)
+            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitById(transaction.categories[0])
         }
     }
 
@@ -75,12 +77,10 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
 
         btn.setOnClickListener {
             DatePickerDialog(
-                btn.context,
-                { _, year, monthOfYear, dayOfMonth ->
+                btn.context, { _, year, monthOfYear, dayOfMonth ->
                     val date = LocalDate.of(year, monthOfYear + 1, dayOfMonth)
                     dataTransferHelper.transferData(date, InputType.DATE)
-                },
-                startDate.year, startDate.monthValue - 1, startDate.dayOfMonth
+                }, startDate.year, startDate.monthValue - 1, startDate.dayOfMonth
             ).show()
         }
     }
@@ -91,12 +91,10 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
 
         btn.setOnClickListener {
             TimePickerDialog(
-                btn.context,
-                { _, hour, minute ->
+                btn.context, { _, hour, minute ->
                     val time = LocalTime.of(hour, minute)
                     dataTransferHelper.transferData(time, InputType.TIME)
-                },
-                startTime.hour, startTime.minute, true
+                }, startTime.hour, startTime.minute, true
             ).show()
         }
     }
@@ -106,14 +104,15 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
 
         btn.setOnClickListener {
             Log.i(TAG, "Category Input Btn Clicked")
-            if (tempDataStore.chapter == null) {
+            if (inputDataMap[InputType.CHAPTER] == null) {
                 Toast.makeText(btn.context, "Select Chapter before Category", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             Log.i(TAG, "Loading Categories")
             val allCategories = dataHandler.getDataListByDataType(DataType.Category) as Categories
-            val availableCategoryIds = tempDataStore.chapter!!.hasCategories
+            val selectedChapter = inputDataMap[InputType.CHAPTER]!! as Chapter
+            val availableCategoryIds = selectedChapter.hasCategories
             val availableCategories = allCategories.dataUnits
                 .filter { category -> availableCategoryIds.contains(category.id) }
 
@@ -150,89 +149,77 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
 
         btn.setOnClickListener {
             Log.i(TAG, "Save Btn Clicked")
-            val note = noteRowET.text.toString()
-            val amount = amountRowET.text.toString().toDouble()
-            val description = descriptionRowET.text.toString()
-
-            if (!tempDataStore.isValid()) {
+            if (!isInputValid()) {
                 Toast.makeText(btn.context, "Please input data saving", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val transaction = Transaction(
-                transactionId,
-                LocalDateTime.of(tempDataStore.date, tempDataStore.time),
-                tempDataStore.chapter!!.id,
-                tempDataStore.account!!.id,
-                listOf(tempDataStore.category!!.id),
-                note,
-                tempDataStore.currency,
-                amount,
-                description
-            )
+            val transaction = createTransaction(transactionId)
 
             dataHandler.mergeDataUnit(transaction)
             requireActivity().finish()
         }
     }
 
+    private fun createTransaction(transactionId: DataId): Transaction {
+        val dateTime =
+            LocalDateTime.of(inputDataMap[InputType.DATE]!! as LocalDate, inputDataMap[InputType.TIME]!! as LocalTime)
+        val chapter = inputDataMap[InputType.CHAPTER]!! as Chapter
+        val account = inputDataMap[InputType.ACCOUNT]!! as Account
+        val category = inputDataMap[InputType.CATEGORY]!! as Category
+        val note = noteRowET.text.toString()
+        val amount = amountRowET.text.toString().toDouble()
+        val currency = inputDataMap[InputType.CURRENCY]!! as Currency
+        val description = descriptionRowET.text.toString()
+
+        return Transaction(
+            transactionId, dateTime, chapter.id, account.id, listOf(category.id), note, currency, amount, description
+        )
+    }
+
     private fun updateInputFields() {
-        dateRowBtn.text = DateTimeUtil.formatDate(tempDataStore.date ?: LocalDate.now())
-        timeRowBtn.text = DateTimeUtil.formatTime(tempDataStore.time ?: LocalTime.now())
+        dateRowBtn.text = DateTimeUtil.formatDate(inputDataMap[InputType.DATE] as LocalDate? ?: LocalDate.now())
+        timeRowBtn.text = DateTimeUtil.formatTime(inputDataMap[InputType.TIME] as LocalTime? ?: LocalTime.now())
 
-        updateBtnText(chapterRowBtn, InputType.CHAPTER, tempDataStore.chapter)
-        updateBtnText(categoryRowBtn, InputType.CATEGORY, tempDataStore.category)
-        updateBtnText(accountRowBtn, InputType.ACCOUNT, tempDataStore.account)
+        updateBtnText(chapterRowBtn, InputType.CHAPTER, inputDataMap[InputType.CHAPTER] as DataUnit?)
+        updateBtnText(categoryRowBtn, InputType.CATEGORY, inputDataMap[InputType.CATEGORY] as DataUnit?)
+        updateBtnText(accountRowBtn, InputType.ACCOUNT, inputDataMap[InputType.ACCOUNT] as DataUnit?)
 
-        updateInputFieldText(amountRowET, tempDataStore.amount)
-        updateInputFieldText(noteRowET, tempDataStore.note)
-        updateInputFieldText(descriptionRowET, tempDataStore.description)
+        updateInputFieldText(amountRowET, inputDataMap[InputType.AMOUNT] as Double?)
+        updateInputFieldText(noteRowET, inputDataMap[InputType.NOTE] as String?)
+        updateInputFieldText(descriptionRowET, inputDataMap[InputType.DESCRIPTION] as String?)
     }
 
     private fun updateBtnText(btn: Button, inputType: InputType, data: DataUnit?) {
-        btn.text = when (data) {
-            null -> inputType.defaultText
-            else -> DataUnitUtil.getDataUnitText(data)
-        }
+        btn.text = if (data == null) inputType.defaultText else DataUnitUtil.getDataUnitText(data)
     }
 
-    private fun updateInputFieldText(inputField: EditText, data: String?) {
-        when (data) {
-            null -> Unit
-            else -> inputField.setText(data)
-        }
+    private fun updateInputFieldText(inputField: EditText, data: Any?) {
+        if (data != null) inputField.setText(data.toString())
     }
 
-    private fun updateInputFieldText(inputField: EditText, data: Double?) {
-        when (data) {
-            null -> Unit
-            else -> inputField.setText(data.toString())
-        }
+    private fun isInputValid(): Boolean {
+        return inputDataMap[InputType.CHAPTER] != null &&
+            inputDataMap[InputType.ACCOUNT] != null &&
+            inputDataMap[InputType.CATEGORY] != null &&
+            inputDataMap[InputType.DATE] != null &&
+            inputDataMap[InputType.TIME] != null
     }
 
     private val dataTransferHelper = object : DataTransferHelper {
         override fun <T : Any> transferData(data: T, inputType: InputType) {
             when (inputType) {
-                InputType.DATE -> {
-                    data as LocalDate
-                    tempDataStore.date = data
+                InputType.DATE, InputType.TIME -> {
+                    inputDataMap[inputType] = data
                 }
-                InputType.TIME -> {
-                    data as LocalTime
-                    tempDataStore.time = data
-                }
-                InputType.CATEGORY -> {
+                InputType.CATEGORY, InputType.ACCOUNT -> {
                     data as DataId
-                    tempDataStore.category = dataHandler.getDataUnitById(data) as Category
+                    inputDataMap[inputType] = dataHandler.getDataUnitById(data)
                 }
                 InputType.CHAPTER -> {
                     data as DataId
-                    tempDataStore.chapter = dataHandler.getDataUnitById(data) as Chapter
-                    tempDataStore.category = null
-                }
-                InputType.ACCOUNT -> {
-                    data as DataId
-                    tempDataStore.account = dataHandler.getDataUnitById(data) as Account
+                    inputDataMap[inputType] = dataHandler.getDataUnitById(data)
+                    inputDataMap[InputType.CATEGORY] = null
                 }
                 else -> throw GeneratedException("Found Unexpected Input Type: ${inputType.name}")
             }
