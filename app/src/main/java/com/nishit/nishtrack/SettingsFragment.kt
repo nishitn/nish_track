@@ -12,11 +12,18 @@ class SettingsFragment : Fragment(R.layout.settings) {
         super.onViewCreated(view, savedInstanceState)
         setAccountsClickBehaviour()
         setChapterClickBehaviour()
+        setCategoryClickBehaviour()
     }
 
     private fun setAccountsClickBehaviour() {
         val label = getString(R.string.accounts)
         text_item_1.text = label
+
+        rl_item_1.setOnClickListener {
+            val intent = Intent(requireActivity(), DataUnitSettingsActivity::class.java)
+            intent.putExtras(DataUnitSettingsActivity.createBundle(DataType.Account))
+            startActivity(intent)
+        }
     }
 
     private fun setChapterClickBehaviour() {
@@ -24,8 +31,19 @@ class SettingsFragment : Fragment(R.layout.settings) {
         text_item_2.text = label
 
         rl_item_2.setOnClickListener {
-            val intent = Intent(requireActivity(), UpdateDataUnitActivity::class.java)
-            intent.putExtras(UpdateDataUnitActivity.createBundle(DataType.Chapter))
+            val intent = Intent(requireActivity(), DataUnitSettingsActivity::class.java)
+            intent.putExtras(DataUnitSettingsActivity.createBundle(DataType.Chapter))
+            startActivity(intent)
+        }
+    }
+
+    private fun setCategoryClickBehaviour() {
+        val label = getString(R.string.categories)
+        text_item_3.text = label
+
+        rl_item_3.setOnClickListener {
+            val intent = Intent(requireActivity(), DataUnitSettingsActivity::class.java)
+            intent.putExtras(DataUnitSettingsActivity.createBundle(DataType.Category))
             startActivity(intent)
         }
     }

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nishit.nishtrack.R
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.impl.Transaction
-import com.nishit.nishtrack.dtos.impl.Transactions
+import com.nishit.nishtrack.dtos.datalist.Transactions
+import com.nishit.nishtrack.dtos.dataunit.Transaction
 import com.nishit.nishtrack.model.enums.DataType
 import kotlinx.android.synthetic.main.day_transaction_item.view.*
 import java.time.LocalDate
@@ -39,9 +39,31 @@ class DayTransactionRvAdapter(
         val date = LocalDate.of(
             selectedYearMonth.year, selectedYearMonth.month, selectedYearMonth.lengthOfMonth() - position
         )
+        val daysTransactions =
+            transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }.toList()
 
-        setItemDayDetails(holder, date)
-        setItemTransactionsList(holder, date)
+        if (daysTransactions.isEmpty()) {
+            hideItem(holder)
+        } else {
+            showItem(holder)    // TODO: Check if this is needed
+            setItemDayDetails(holder, date)
+            setItemTransactionsList(holder, daysTransactions)
+        }
+    }
+
+    private fun hideItem(holder: DayTransactionViewHolder) {
+        holder.itemView.apply {
+            visibility = View.GONE
+            layoutParams = RecyclerView.LayoutParams(0, 0)
+        }
+    }
+
+    private fun showItem(holder: DayTransactionViewHolder) {
+        holder.itemView.apply {
+            visibility = View.VISIBLE
+            layoutParams =
+                RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -57,10 +79,7 @@ class DayTransactionRvAdapter(
         }
     }
 
-    private fun setItemTransactionsList(holder: DayTransactionViewHolder, date: LocalDate) {
-        val daysTransactions =
-            transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }.toList()
-
+    private fun setItemTransactionsList(holder: DayTransactionViewHolder, daysTransactions: List<Transaction>) {
         val transactionAdapter = TransactionRvAdapter(daysTransactions)
 
         holder.itemView.apply {

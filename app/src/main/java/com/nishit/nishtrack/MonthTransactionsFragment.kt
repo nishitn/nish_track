@@ -17,15 +17,15 @@ class MonthTransactionsFragment : Fragment(R.layout.transaction_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val selectedYearMonth = BundleUtil.getYearMonthFromBundle(arguments)
-            ?: throw GeneratedException("Year Month arguments were not passed")
+        val selectedYearMonth =
+            BundleUtil.getYearMonth(arguments) ?: throw GeneratedException("Year Month arguments were not passed")
 
         dayTransactionAdapter = DayTransactionRvAdapter(selectedYearMonth)
 
         Log.i(TAG, "DayTransactionRvAdapter adapter apply started")
         dayTransactionsRv.apply {
             adapter = dayTransactionAdapter
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(requireActivity())
         }
         Log.i(TAG, "DayTransactionRvAdapter adapter apply completed")
     }
@@ -41,7 +41,7 @@ class MonthTransactionsFragment : Fragment(R.layout.transaction_list) {
         private const val TAG = "MonthTransactionsFragment"
 
         fun createBundle(yearMonth: YearMonth): Bundle {
-            return BundleUtil.addYearMonthToBundle(yearMonth)
+            return BundleUtil.getYearMonthBundle(yearMonth)
         }
     }
 }

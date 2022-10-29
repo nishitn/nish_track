@@ -3,26 +3,34 @@ package com.nishit.nishtrack.rvadapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nishit.nishtrack.R
+import com.nishit.nishtrack.SelectionDialogFragment
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.impl.Category
-import com.nishit.nishtrack.dtos.impl.Chapter
-import com.nishit.nishtrack.model.exceptions.GeneratedException
+import com.nishit.nishtrack.dtos.datalist.Categories
+import com.nishit.nishtrack.dtos.dataunit.Chapter
+import com.nishit.nishtrack.factory.DataListFactory
+import com.nishit.nishtrack.helper.DataTransferHelper
+import com.nishit.nishtrack.model.enums.DataType
+import com.nishit.nishtrack.model.enums.InputType
 import kotlinx.android.synthetic.main.update_field_item.view.*
 
 class CategoryRvAdapter(
-    private val chapterId: DataId
+    private val dataId: DataId,
+    private val dataTransferHelper: DataTransferHelper,
+    private val supportFragmentManager: FragmentManager
 ) : RecyclerView.Adapter<CategoryRvAdapter.CategoryViewHolder>() {
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val dataHandler: DataHandler = LocalDataHandler
-    private var categories: List<Category>
+    private val dataType: DataType = DataType.Category
+    private var categoriesDataList: Categories
 
     init {
-        categories = getCategoriesForDataId()
+        categoriesDataList = getCategoriesForDataId()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -33,34 +41,43 @@ class CategoryRvAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         if (position == itemCount - 1) {
-            val label = "Add More"
             holder.itemView.apply {
-                updateFieldItemText.text = label
+                updateFieldItemText.text = resources.getText(R.string.add_more)
                 updateFieldItemUnderline.alpha = 0F
                 updateFieldItemText.alpha = 0.2F
             }
+
+            holder.itemView.setOnClickListener {
+                val chaptersDataList = dataHandler.getDataListByDataType(dataType)
+                val currentCategoryIds = categoriesDataList.dataUnits.map { dataUnit -> dataUnit.id }.toSet()
+                val addableDataUnits =
+                    chaptersDataList.dataUnits.filter { dataUnit -> !currentCategoryIds.contains(dataUnit.id) }
+                val selectionDialog = SelectionDialogFragment(InputType.CATEGORY, addableDataUnits, dataTransferHelper)
+                selectionDialog.show(supportFragmentManager, "SelectionDialog")
+            }
         } else {
-            val category = categories[position]
+            val dataUnit = categoriesDataList.dataUnits[position]
             holder.itemView.apply {
-                updateFieldItemText.text = category.label
+                updateFieldItemText.text = dataUnit.label
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return categories.size + 1
+        return categoriesDataList.dataUnits.size + 1
     }
 
-    fun updateCategories() {
-        categories = getCategoriesForDataId()
+    fun updateDataList() {
+        categoriesDataList = getCategoriesForDataId()
     }
 
-    private fun getCategoriesForDataId(): List<Category> {
-        val chapter = dataHandler.getDataUnitOrNullById(chapterId) ?: return listOf()
-        val categoryList = dataHandler.getDataUnitsById((chapter as Chapter).hasCategories)
-        if (categoryList.any { it !is Category }) {
-            throw GeneratedException("Category list contains data other than category")
+    private fun getCategoriesForDataId(): Categories {
+        val chapterDataUnit = dataHandler.getDataUnitOrNullById(dataId)
+        return if (chapterDataUnit == null) {
+            Categories()
+        } else {
+            val categoryDataUnits = dataHandler.getDataUnitsById((chapterDataUnit as Chapter).hasCategories)
+            Categories(DataListFactory.mutableListOf(categoryDataUnits))
         }
-        return categoryList.map { it as Category }
     }
 }

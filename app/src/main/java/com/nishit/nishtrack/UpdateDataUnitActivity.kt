@@ -16,8 +16,8 @@ class UpdateDataUnitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.update_data_unit_view)
 
-        val dataIdFromBundle = BundleUtil.getDataIdFromBundle(intent.extras)
-        val dataTypeFromBundle = BundleUtil.getDataTypeFromBundle(intent.extras)
+        val dataIdFromBundle = BundleUtil.getDataId(intent.extras)
+        val dataTypeFromBundle = BundleUtil.getDataType(intent.extras)
 
         val selectedDataId = when {
             dataIdFromBundle != null -> dataIdFromBundle
@@ -57,11 +57,11 @@ class UpdateDataUnitActivity : AppCompatActivity() {
 
     companion object {
         fun createBundle(selectedDataId: DataId): Bundle {
-            return BundleUtil.addDataIdToBundle(selectedDataId)
+            return BundleUtil.getDataIdBundle(selectedDataId)
         }
 
         fun createBundle(dataType: DataType): Bundle {
-            return BundleUtil.addDataTypeToBundle(dataType)
+            return BundleUtil.getDataTypeBundle(dataType)
         }
     }
 }

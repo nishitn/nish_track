@@ -22,4 +22,5 @@
     <string name="placeholderText">Text</string>
     <string name="placeholderDate_dd_mmm_yyyy">27 Jul 2022</string>
     <string name="placeholderTime_hh_mm_a">10:43 AM</string>
+    <string name="add_more">Add More</string>
 </resources>

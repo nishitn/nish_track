@@ -1,7 +1,7 @@
-package com.nishit.nishtrack.dtos.impl
+package com.nishit.nishtrack.dtos.datalist
 
 import com.google.gson.annotations.SerializedName
-import com.nishit.nishtrack.dtos.DataList
+import com.nishit.nishtrack.dtos.dataunit.Category
 import com.nishit.nishtrack.model.enums.DataType
 
 class Categories(

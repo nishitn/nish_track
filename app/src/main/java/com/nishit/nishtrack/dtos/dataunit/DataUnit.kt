@@ -1,8 +1,9 @@
-package com.nishit.nishtrack.dtos
+package com.nishit.nishtrack.dtos.dataunit
 
+import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.model.enums.DataType
 
-interface DataUnit {
+sealed interface DataUnit {
     val id: DataId
 
     val label: String

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.nishit.nishtrack.R
-import com.nishit.nishtrack.dtos.DataUnit
+import com.nishit.nishtrack.dtos.dataunit.DataUnit
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.InputType
 import kotlinx.android.synthetic.main.selection_dialog_item.view.*
@@ -21,8 +21,7 @@ class SelectionDialogRvAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectionDialogViewHolder {
         return SelectionDialogViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.selection_dialog_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.selection_dialog_item, parent, false)
         )
     }
 

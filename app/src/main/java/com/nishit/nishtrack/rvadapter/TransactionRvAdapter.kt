@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.nishit.nishtrack.UpdateDataUnitActivity
 import com.nishit.nishtrack.R
-import com.nishit.nishtrack.dtos.impl.Transaction
+import com.nishit.nishtrack.UpdateDataUnitActivity
+import com.nishit.nishtrack.dtos.dataunit.Transaction
 import com.nishit.nishtrack.util.DataUnitUtil
 import kotlinx.android.synthetic.main.transaction_item.view.*
 

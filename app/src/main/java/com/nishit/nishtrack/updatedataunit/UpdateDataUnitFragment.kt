@@ -8,7 +8,7 @@ import com.nishit.nishtrack.util.BundleUtil
 open class UpdateDataUnitFragment(layout: Int) : Fragment(layout) {
     companion object {
         fun createBundle(selectedDataId: DataId): Bundle {
-            return BundleUtil.addDataIdToBundle(selectedDataId)
+            return BundleUtil.getDataIdBundle(selectedDataId)
         }
     }
 }

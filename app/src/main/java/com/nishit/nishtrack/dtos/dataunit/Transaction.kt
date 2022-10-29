@@ -1,8 +1,7 @@
-package com.nishit.nishtrack.dtos.impl
+package com.nishit.nishtrack.dtos.dataunit
 
 import com.google.gson.annotations.SerializedName
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.DataUnit
 import com.nishit.nishtrack.model.enums.Currency
 import com.nishit.nishtrack.model.enums.DataType
 import java.time.LocalDateTime

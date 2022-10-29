@@ -13,8 +13,8 @@ import com.nishit.nishtrack.SelectionDialogFragment
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.DataUnit
-import com.nishit.nishtrack.dtos.impl.*
+import com.nishit.nishtrack.dtos.datalist.Categories
+import com.nishit.nishtrack.dtos.dataunit.*
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.Currency
 import com.nishit.nishtrack.model.enums.DataType
@@ -35,7 +35,7 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val selectedDataId = BundleUtil.getDataIdFromBundle(arguments) ?: DataId(DataType.Transaction)
+        val selectedDataId = BundleUtil.getDataId(arguments) ?: DataId(DataType.Transaction)
 
         populateTempDataStore(selectedDataId)
         updateInputFields()
@@ -113,8 +113,8 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
             val allCategories = dataHandler.getDataListByDataType(DataType.Category) as Categories
             val selectedChapter = inputDataMap[InputType.CHAPTER]!! as Chapter
             val availableCategoryIds = selectedChapter.hasCategories
-            val availableCategories = allCategories.dataUnits
-                .filter { category -> availableCategoryIds.contains(category.id) }
+            val availableCategories =
+                allCategories.dataUnits.filter { category -> availableCategoryIds.contains(category.id) }
 
             Log.i(TAG, "Selection Dialog Fragment creation started")
             val selectionDialog = SelectionDialogFragment(InputType.CATEGORY, availableCategories, dataTransferHelper)
@@ -203,7 +203,8 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
             inputDataMap[InputType.ACCOUNT] != null &&
             inputDataMap[InputType.CATEGORY] != null &&
             inputDataMap[InputType.DATE] != null &&
-            inputDataMap[InputType.TIME] != null
+            inputDataMap[InputType.TIME] != null &&
+            amountRowET.text.isNotBlank()
     }
 
     private val dataTransferHelper = object : DataTransferHelper {

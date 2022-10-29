@@ -3,7 +3,7 @@ package com.nishit.nishtrack.util
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.DataUnit
+import com.nishit.nishtrack.dtos.dataunit.DataUnit
 import com.nishit.nishtrack.model.enums.Separator
 import org.apache.commons.lang3.StringUtils
 

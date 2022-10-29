@@ -7,11 +7,7 @@ import com.google.gson.GsonBuilder
 import com.nishit.nishtrack.HomeBackDropActivity
 import com.nishit.nishtrack.data.DataStore
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.DataList
-import com.nishit.nishtrack.dtos.impl.Accounts
-import com.nishit.nishtrack.dtos.impl.Categories
-import com.nishit.nishtrack.dtos.impl.Chapters
-import com.nishit.nishtrack.dtos.impl.Transactions
+import com.nishit.nishtrack.dtos.datalist.*
 import com.nishit.nishtrack.extension.CurrencyTypeAdapter
 import com.nishit.nishtrack.extension.DataIdTypeAdapter
 import com.nishit.nishtrack.extension.LocalDateTimeTypeAdapter
@@ -41,7 +37,7 @@ object LocalDataStore : DataStore {
             DataType.Chapter -> Paths.get(basePath.pathString, "chapter.json")
             DataType.Transaction -> Paths.get(basePath.pathString, "transaction.json")
             DataType.Account -> Paths.get(basePath.pathString, "account.json")
-            else -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
+            DataType.User -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
         }
 
         return path.pathString
@@ -88,12 +84,12 @@ object LocalDataStore : DataStore {
             DataType.Chapter -> gson.fromJson(jsonString, Chapters::class.java)
             DataType.Transaction -> gson.fromJson(jsonString, Transactions::class.java)
             DataType.Account -> gson.fromJson(jsonString, Accounts::class.java)
-            else -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
+            DataType.User -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
         }
     }
 
     override fun updateDataList(dataList: DataList): Boolean {
-        val data = when(dataList.dataType) {
+        val data = when (dataList.dataType) {
             DataType.Transaction -> gson.toJson(dataList, Transactions::class.java)
             DataType.Chapter -> gson.toJson(dataList, Chapters::class.java)
             DataType.Category -> gson.toJson(dataList, Categories::class.java)

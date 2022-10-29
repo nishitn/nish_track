@@ -99,4 +99,19 @@
         <item name="android:alpha">0.2</item>
     </style>
 
+    <style name="DataUnitListRVItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:background">@drawable/transaction_item_background</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="DataUnitListRVItemText" parent="Label.Large">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/onPrimaryContainer</item>
+    </style>
+
 </resources>

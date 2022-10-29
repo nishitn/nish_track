@@ -19,7 +19,7 @@ class HomeBackDropActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "Setting content view")
         setContentView(R.layout.backdrop_view)
-        val selectedYearMonth = BundleUtil.getYearMonthFromBundle(savedInstanceState) ?: YearMonth.now()
+        val selectedYearMonth = BundleUtil.getYearMonth(savedInstanceState) ?: YearMonth.now()
 
         Log.i(TAG, "Setting Glance Layer")
         setGlanceLayer()

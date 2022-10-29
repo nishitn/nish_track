@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nishit.nishtrack.dtos.DataUnit
+import com.nishit.nishtrack.dtos.dataunit.DataUnit
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.InputType
 import com.nishit.nishtrack.rvadapter.SelectionDialogRvAdapter
