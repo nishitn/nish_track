@@ -3,26 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
     android:background="@drawable/transaction_item_background"
-    android:padding="8dp"
-    android:layout_marginTop="5dp">
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:baselineAligned="false">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:id="@+id/pictureContainerRl"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
 
             <View
                 android:id="@+id/personIconBackground"
@@ -30,7 +28,8 @@
                 android:layout_height="36dp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/person_icon_background"
-                android:backgroundTint="@color/primary" />
+                android:backgroundTint="@color/primary"
+                app:layout_constraintDimensionRatio="1:1" />
 
             <View
                 android:id="@+id/personIcon"
@@ -38,24 +37,26 @@
                 android:layout_height="24dp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/person_icon"
-                android:backgroundTint="@color/onPrimary" />
+                android:backgroundTint="@color/onPrimary"
+                app:layout_constraintDimensionRatio="1:1" />
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/itemDetailsRl"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/noteTv"
                 style="@style/Body.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:text="Jalsa"
                 android:textColor="@color/onPrimaryContainer" />
 
@@ -64,37 +65,53 @@
                 style="@style/Label.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/noteTv"
-                android:layout_alignParentStart="true"
                 android:text="Dine Out"
                 android:textColor="@color/onPrimaryContainer" />
 
-            <TextView
-                android:id="@+id/userInfoTv"
-                style="@style/Body.Small"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/categoryTv"
-                android:layout_alignParentStart="true"
-                android:text="Canara Bank - Friends"
-                android:textColor="@color/primary" />
+                android:orientation="horizontal">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/accountInfoTv"
+                    style="@style/Body.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Canara Bank"
+                    android:textColor="@color/primary" />
 
-        <RelativeLayout
+                <TextView
+                    style="@style/Body.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" - "
+                    android:textColor="@color/primary" />
+
+                <TextView
+                    android:id="@+id/userInfoTv"
+                    style="@style/Body.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friends"
+                    android:textColor="@color/primary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/amountRl"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/currencyTv"
                 style="@style/Title.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_marginEnd="2dp"
                 android:text="@string/currency_placeholder"
                 android:textColor="@color/onPrimaryContainer" />
 
@@ -103,12 +120,10 @@
                 style="@style/Title.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/currencyTv"
                 android:text="2,00,000"
                 android:textColor="@color/onPrimaryContainer" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

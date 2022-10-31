@@ -10,7 +10,6 @@ import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.datalist.Categories
 import com.nishit.nishtrack.dtos.dataunit.Category
-import com.nishit.nishtrack.dtos.dataunit.Chapter
 import com.nishit.nishtrack.factory.DataListFactory
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.DataType
@@ -19,16 +18,16 @@ import com.nishit.nishtrack.model.exceptions.GeneratedException
 import com.nishit.nishtrack.rvadapter.CategoryRvAdapter
 import com.nishit.nishtrack.updatedataunit.UpdateDataUnitFragment
 import com.nishit.nishtrack.util.BundleUtil
-import kotlinx.android.synthetic.main.update_chapter.*
+import kotlinx.android.synthetic.main.update_category.*
 
-class UpdateChapterFragment : UpdateDataUnitFragment(R.layout.update_chapter) {
+class UpdateCategoryFragment : UpdateDataUnitFragment(R.layout.update_category) {
     private val dataHandler: DataHandler = LocalDataHandler
     private val inputDataMap: MutableMap<InputType, Any?> = mutableMapOf()
     private lateinit var selectedDataId: DataId
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        selectedDataId = BundleUtil.getDataId(arguments) ?: DataId(DataType.Chapter)
+        selectedDataId = BundleUtil.getDataId(arguments) ?: DataId(DataType.Category)
 
         populateTempDataStore(selectedDataId)
         updateInputFields()
@@ -39,28 +38,28 @@ class UpdateChapterFragment : UpdateDataUnitFragment(R.layout.update_chapter) {
     private fun populateTempDataStore(selectedDataId: DataId) {
         val dataUnit = dataHandler.getDataUnitOrNullById(selectedDataId)
         if (dataUnit != null) {
-            val chapter = dataUnit as Chapter
-            inputDataMap[InputType.LABEL] = chapter.label
-            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitsById(chapter.hasCategories)
+            val category = dataUnit as Category
+            inputDataMap[InputType.LABEL] = category.label
+            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitsById(category.hasCategories)
         }
     }
 
     private fun updateInputFields() {
         val label = inputDataMap[InputType.LABEL] as String?
-        if (label != null) chapterLabelRowET.setText(label)
+        if (label != null) categoryLabelRowET.setText(label)
 
         val categories = Categories(getCategoryListFromInputMap())
         val categoryRvAdapter = CategoryRvAdapter(
             categories, dataTransferHelper, requireActivity().supportFragmentManager
         )
-        chapterCategoryRowRV.apply {
+        categorySubCategoryRowRV.apply {
             adapter = categoryRvAdapter
             layoutManager = LinearLayoutManager(requireActivity())
         }
     }
 
     private fun setSaveBtnBehaviour(chapterId: DataId) {
-        val btn = updateChapterSaveBtn
+        val btn = updateCategorySaveBtn
 
         btn.setOnClickListener {
             if (!isInputValid()) {
@@ -68,22 +67,22 @@ class UpdateChapterFragment : UpdateDataUnitFragment(R.layout.update_chapter) {
                 return@setOnClickListener
             }
 
-            val chapter = createChapter(chapterId)
+            val chapter = createCategory(chapterId)
 
             dataHandler.mergeDataUnit(chapter)
             requireActivity().finish()
         }
     }
 
-    private fun createChapter(chapterId: DataId): Chapter {
-        val label = chapterLabelRowET.text.toString()
+    private fun createCategory(categoryId: DataId): Category {
+        val label = categoryLabelRowET.text.toString()
         val categories = getCategoryListFromInputMap()
         val categoryIds = categories.map { dataUnit -> dataUnit.id }.toMutableList()
-        return Chapter(chapterId, label, categoryIds)
+        return Category(categoryId, label, categoryIds)
     }
 
     private fun isInputValid(): Boolean {
-        return inputDataMap[InputType.CATEGORY] != null && chapterLabelRowET.text.isNotBlank()
+        return inputDataMap[InputType.CATEGORY] != null && categoryLabelRowET.text.isNotBlank()
     }
 
     private fun getCategoryListFromInputMap(): MutableList<Category> {

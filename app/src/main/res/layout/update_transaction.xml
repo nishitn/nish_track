@@ -14,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
@@ -86,7 +85,6 @@
 
         <LinearLayout style="@style/UpdateField.InputRowLL">
 
-
             <TextView
                 android:id="@+id/chapterRowTV"
                 style="@style/UpdateField.InputRowLabel"
@@ -114,7 +112,6 @@
         </LinearLayout>
 
         <LinearLayout style="@style/UpdateField.InputRowLL">
-
 
             <TextView
                 android:id="@+id/categoryRowTV"

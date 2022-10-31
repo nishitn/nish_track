@@ -16,7 +16,6 @@ class DateTimeUtil {
 
         private val timeFormatH24: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-
         private fun getTimeFormatter(timeFormat: Int): DateTimeFormatter {
             return when (timeFormat) {
                 TimeFormat.CLOCK_24H -> timeFormatH24

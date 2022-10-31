@@ -6,7 +6,7 @@
     android:padding="8dp">
 
     <LinearLayout
-        android:id="@+id/updateChapterFirstLL"
+        android:id="@+id/updateAccountFirstLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,36 +17,23 @@
         <LinearLayout style="@style/UpdateField.InputRowLL">
 
             <TextView
-                android:id="@+id/chapterLabelRowTV"
+                android:id="@+id/accountLabelRowTV"
                 style="@style/UpdateField.InputRowLabel"
-                android:labelFor="@id/chapterLabelRowET"
+                android:labelFor="@id/accountLabelRowET"
                 android:text="@string/label" />
 
             <EditText
-                android:id="@+id/chapterLabelRowET"
+                android:id="@+id/accountLabelRowET"
                 style="@style/UpdateField.InputRowET"
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
         </LinearLayout>
 
-        <LinearLayout style="@style/UpdateField.InputRowLL.RecyclerView">
-
-            <TextView
-                android:id="@+id/chapterCategoryRowTV"
-                style="@style/UpdateField.InputRowLabel"
-                android:text="@string/category" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chapterCategoryRowRV"
-                style="@style/UpdateField.InputRowRV" />
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <Button
-        android:id="@+id/updateChapterSaveBtn"
+        android:id="@+id/updateAccountSaveBtn"
         style="@style/UpdateField.SaveBtn"
         android:text="@string/saveBtnText"
         app:layout_constraintBottom_toBottomOf="parent"

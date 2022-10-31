@@ -9,29 +9,19 @@ import com.nishit.nishtrack.R
 import com.nishit.nishtrack.SelectionDialogFragment
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.dtos.datalist.Categories
-import com.nishit.nishtrack.dtos.dataunit.Chapter
-import com.nishit.nishtrack.factory.DataListFactory
 import com.nishit.nishtrack.helper.DataTransferHelper
-import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.enums.InputType
 import kotlinx.android.synthetic.main.update_field_item.view.*
 
 class CategoryRvAdapter(
-    private val dataId: DataId,
+    private val categoriesDataList: Categories,
     private val dataTransferHelper: DataTransferHelper,
     private val supportFragmentManager: FragmentManager
 ) : RecyclerView.Adapter<CategoryRvAdapter.CategoryViewHolder>() {
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val dataHandler: DataHandler = LocalDataHandler
-    private val dataType: DataType = DataType.Category
-    private var categoriesDataList: Categories
-
-    init {
-        categoriesDataList = getCategoriesForDataId()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
@@ -45,13 +35,17 @@ class CategoryRvAdapter(
                 updateFieldItemText.text = resources.getText(R.string.add_more)
                 updateFieldItemUnderline.alpha = 0F
                 updateFieldItemText.alpha = 0.2F
+                updateFieldItemDeleteIcon.apply {
+                    visibility = View.GONE
+                    layoutParams = RecyclerView.LayoutParams(0, 0)
+                }
             }
 
             holder.itemView.setOnClickListener {
-                val chaptersDataList = dataHandler.getDataListByDataType(dataType)
+                val allCategories = dataHandler.getDataListByDataType(categoriesDataList.dataType)
                 val currentCategoryIds = categoriesDataList.dataUnits.map { dataUnit -> dataUnit.id }.toSet()
                 val addableDataUnits =
-                    chaptersDataList.dataUnits.filter { dataUnit -> !currentCategoryIds.contains(dataUnit.id) }
+                    allCategories.dataUnits.filter { dataUnit -> !currentCategoryIds.contains(dataUnit.id) }
                 val selectionDialog = SelectionDialogFragment(InputType.CATEGORY, addableDataUnits, dataTransferHelper)
                 selectionDialog.show(supportFragmentManager, "SelectionDialog")
             }
@@ -60,24 +54,14 @@ class CategoryRvAdapter(
             holder.itemView.apply {
                 updateFieldItemText.text = dataUnit.label
             }
+
+            holder.itemView.updateFieldItemDeleteIcon.setOnClickListener {
+                dataTransferHelper.transferData(dataUnit.id, InputType.CATEGORY)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return categoriesDataList.dataUnits.size + 1
-    }
-
-    fun updateDataList() {
-        categoriesDataList = getCategoriesForDataId()
-    }
-
-    private fun getCategoriesForDataId(): Categories {
-        val chapterDataUnit = dataHandler.getDataUnitOrNullById(dataId)
-        return if (chapterDataUnit == null) {
-            Categories()
-        } else {
-            val categoryDataUnits = dataHandler.getDataUnitsById((chapterDataUnit as Chapter).hasCategories)
-            Categories(DataListFactory.mutableListOf(categoryDataUnits))
-        }
     }
 }

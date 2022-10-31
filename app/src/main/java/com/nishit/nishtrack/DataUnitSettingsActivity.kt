@@ -13,15 +13,15 @@ class DataUnitSettingsActivity : AppCompatActivity() {
 
         val dataType = BundleUtil.getDataType(intent.extras) ?: throw GeneratedException("DataType was not provided")
 
-        setGlanceLayer()
+        setGlanceLayer(dataType)
         setFrontLayerFragment(dataType)
     }
 
-    private fun setGlanceLayer() {
-        val addTransactionGlanceFragment = AddTransactionGlanceFragment()
+    private fun setGlanceLayer(dataType: DataType) {
+        val appBarGlanceFragment = AppBarGlanceFragment(dataType)
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.dusGlanceLayer, addTransactionGlanceFragment)
+            replace(R.id.dusGlanceLayer, appBarGlanceFragment)
             commit()
         }
     }
