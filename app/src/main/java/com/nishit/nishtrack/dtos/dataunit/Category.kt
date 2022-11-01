@@ -4,10 +4,13 @@ import com.google.gson.annotations.SerializedName
 import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.model.enums.DataType
 
-class Category(
+data class Category(
     @SerializedName("id") override val id: DataId,
     @SerializedName("label") override val label: String,
-    @SerializedName("hasCategories") val hasCategories: List<DataId> = listOf()
+    @SerializedName("parentCategory") val parentCategory: DataId?,
+    @SerializedName("hasCategories") val hasCategories: MutableSet<DataId> = mutableSetOf()
 ) : DataUnit {
+    constructor(id: DataId, label: String, hasCategories: MutableSet<DataId>) : this(id, label, null, hasCategories)
+
     override val dataType = DataType.Category
 }

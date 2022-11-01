@@ -8,7 +8,6 @@ import com.nishit.nishtrack.R
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.datalist.Categories
 import com.nishit.nishtrack.dtos.dataunit.Category
 import com.nishit.nishtrack.factory.DataListFactory
 import com.nishit.nishtrack.helper.DataTransferHelper
@@ -40,7 +39,7 @@ class UpdateCategoryFragment : UpdateDataUnitFragment(R.layout.update_category) 
         if (dataUnit != null) {
             val category = dataUnit as Category
             inputDataMap[InputType.LABEL] = category.label
-            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitsById(category.hasCategories)
+            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitsByIds(category.hasCategories)
         }
     }
 
@@ -48,9 +47,9 @@ class UpdateCategoryFragment : UpdateDataUnitFragment(R.layout.update_category) 
         val label = inputDataMap[InputType.LABEL] as String?
         if (label != null) categoryLabelRowET.setText(label)
 
-        val categories = Categories(getCategoryListFromInputMap())
+        val categoryList = getCategoryListFromInputMap()
         val categoryRvAdapter = CategoryRvAdapter(
-            categories, dataTransferHelper, requireActivity().supportFragmentManager
+            categoryList, dataTransferHelper, requireActivity().supportFragmentManager
         )
         categorySubCategoryRowRV.apply {
             adapter = categoryRvAdapter
@@ -77,7 +76,7 @@ class UpdateCategoryFragment : UpdateDataUnitFragment(R.layout.update_category) 
     private fun createCategory(categoryId: DataId): Category {
         val label = categoryLabelRowET.text.toString()
         val categories = getCategoryListFromInputMap()
-        val categoryIds = categories.map { dataUnit -> dataUnit.id }.toMutableList()
+        val categoryIds = categories.map { dataUnit -> dataUnit.id }.toMutableSet()
         return Category(categoryId, label, categoryIds)
     }
 

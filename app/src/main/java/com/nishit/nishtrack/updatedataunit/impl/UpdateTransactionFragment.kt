@@ -13,7 +13,6 @@ import com.nishit.nishtrack.SelectionDialogFragment
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.datalist.Categories
 import com.nishit.nishtrack.dtos.dataunit.*
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.Currency
@@ -67,7 +66,7 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
             inputDataMap[InputType.DESCRIPTION] = transaction.description
             inputDataMap[InputType.CHAPTER] = dataHandler.getDataUnitById(transaction.chapter)
             inputDataMap[InputType.ACCOUNT] = dataHandler.getDataUnitById(transaction.account)
-            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitById(transaction.categories[0])
+            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitById(transaction.category)
         }
     }
 
@@ -103,24 +102,15 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         val btn = categoryRowBtn
 
         btn.setOnClickListener {
-            Log.i(TAG, "Category Input Btn Clicked")
             if (inputDataMap[InputType.CHAPTER] == null) {
                 Toast.makeText(btn.context, "Select Chapter before Category", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            Log.i(TAG, "Loading Categories")
-            val allCategories = dataHandler.getDataListByDataType(DataType.Category) as Categories
             val selectedChapter = inputDataMap[InputType.CHAPTER]!! as Chapter
-            val availableCategoryIds = selectedChapter.hasCategories
-            val availableCategories =
-                allCategories.dataUnits.filter { category -> availableCategoryIds.contains(category.id) }
-
-            Log.i(TAG, "Selection Dialog Fragment creation started")
+            val availableCategories = DataUnitUtil.getCategoriesForChapter(selectedChapter)
             val selectionDialog = SelectionDialogFragment(InputType.CATEGORY, availableCategories, dataTransferHelper)
             selectionDialog.show(requireActivity().supportFragmentManager, "SelectionDialog")
-
-            Log.i(TAG, "Selection Dialog Fragment creation complete")
         }
     }
 
@@ -128,8 +118,8 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         val btn = chapterRowBtn
 
         btn.setOnClickListener {
-            val chapters = dataHandler.getDataListByDataType(DataType.Chapter)
-            val selectionDialog = SelectionDialogFragment(InputType.CHAPTER, chapters.dataUnits, dataTransferHelper)
+            val dataUnits = dataHandler.getDataListByDataType(DataType.Chapter).dataUnits
+            val selectionDialog = SelectionDialogFragment(InputType.CHAPTER, dataUnits, dataTransferHelper)
             selectionDialog.show(requireActivity().supportFragmentManager, "SelectionDialog")
         }
     }
@@ -138,8 +128,8 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         val btn = accountRowBtn
 
         btn.setOnClickListener {
-            val accounts = dataHandler.getDataListByDataType(DataType.Account)
-            val selectionDialog = SelectionDialogFragment(InputType.ACCOUNT, accounts.dataUnits, dataTransferHelper)
+            val dataUnits = dataHandler.getDataListByDataType(DataType.Account).dataUnits
+            val selectionDialog = SelectionDialogFragment(InputType.ACCOUNT, dataUnits, dataTransferHelper)
             selectionDialog.show(requireActivity().supportFragmentManager, "SelectionDialog")
         }
     }
@@ -167,13 +157,13 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         val chapter = inputDataMap[InputType.CHAPTER]!! as Chapter
         val account = inputDataMap[InputType.ACCOUNT]!! as Account
         val category = inputDataMap[InputType.CATEGORY]!! as Category
-        val note = noteRowET.text.toString()
-        val amount = amountRowET.text.toString().toDouble()
         val currency = inputDataMap[InputType.CURRENCY]!! as Currency
+        val amount = amountRowET.text.toString().toDouble()
+        val note = noteRowET.text.toString()
         val description = descriptionRowET.text.toString()
 
         return Transaction(
-            transactionId, dateTime, chapter.id, account.id, listOf(category.id), note, currency, amount, description
+            transactionId, dateTime, chapter.id, account.id, category.id, note, currency, amount, description
         )
     }
 
@@ -181,17 +171,18 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         dateRowBtn.text = DateTimeUtil.formatDate(inputDataMap[InputType.DATE] as LocalDate? ?: LocalDate.now())
         timeRowBtn.text = DateTimeUtil.formatTime(inputDataMap[InputType.TIME] as LocalTime? ?: LocalTime.now())
 
-        updateBtnText(chapterRowBtn, InputType.CHAPTER, inputDataMap[InputType.CHAPTER] as DataUnit?)
-        updateBtnText(categoryRowBtn, InputType.CATEGORY, inputDataMap[InputType.CATEGORY] as DataUnit?)
-        updateBtnText(accountRowBtn, InputType.ACCOUNT, inputDataMap[InputType.ACCOUNT] as DataUnit?)
+        updateBtnText(chapterRowBtn, InputType.CHAPTER)
+        updateBtnText(categoryRowBtn, InputType.CATEGORY)
+        updateBtnText(accountRowBtn, InputType.ACCOUNT)
 
         updateInputFieldText(amountRowET, inputDataMap[InputType.AMOUNT] as Double?)
         updateInputFieldText(noteRowET, inputDataMap[InputType.NOTE] as String?)
         updateInputFieldText(descriptionRowET, inputDataMap[InputType.DESCRIPTION] as String?)
     }
 
-    private fun updateBtnText(btn: Button, inputType: InputType, data: DataUnit?) {
-        btn.text = if (data == null) inputType.defaultText else DataUnitUtil.getDataUnitText(data)
+    private fun updateBtnText(btn: Button, inputType: InputType) {
+        val dataUnit = inputDataMap[inputType] as DataUnit?
+        btn.text = if (dataUnit == null) inputType.defaultText else DataUnitUtil.getDataUnitText(dataUnit)
     }
 
     private fun updateInputFieldText(inputField: EditText, data: Any?) {
@@ -199,11 +190,12 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
     }
 
     private fun isInputValid(): Boolean {
-        return inputDataMap[InputType.CHAPTER] != null &&
+        return inputDataMap[InputType.DATE] != null &&
+            inputDataMap[InputType.TIME] != null &&
+            inputDataMap[InputType.CHAPTER] != null &&
             inputDataMap[InputType.ACCOUNT] != null &&
             inputDataMap[InputType.CATEGORY] != null &&
-            inputDataMap[InputType.DATE] != null &&
-            inputDataMap[InputType.TIME] != null &&
+            inputDataMap[InputType.CURRENCY] != null &&
             amountRowET.text.isNotBlank()
     }
 

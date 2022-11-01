@@ -18,7 +18,7 @@ class DataListFactory {
         }
 
         inline fun <reified T : DataUnit> mutableListOf(inputList: List<*>): MutableList<T> {
-            if (inputList.any { item -> item !is T }) {
+            if (inputList.any { it !is T }) {
                 throw GeneratedException("")
             }
             return inputList.map { dataUnit -> dataUnit as T }.toMutableList()

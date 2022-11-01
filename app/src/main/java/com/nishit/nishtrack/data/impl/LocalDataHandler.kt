@@ -21,7 +21,7 @@ object LocalDataHandler : DataHandler {
         return getDataListByDataType(id.dataType).dataUnits.firstOrNull { dataUnit -> dataUnit.id == id }
     }
 
-    override fun getDataUnitsById(ids: List<DataId>): List<DataUnit> {
+    override fun getDataUnitsByIds(ids: Collection<DataId>): List<DataUnit> {
         // TODO: Update to thr exception if any id is not found, and also use set
         if (ids.isEmpty()) {
             return listOf()
@@ -30,7 +30,7 @@ object LocalDataHandler : DataHandler {
         if (ids.any { id -> id.dataType != dataType }) {
             throw GeneratedException("All ids should be of same DataType")
         }
-        return getDataListByDataType(dataType).dataUnits.filter { dataUnit -> ids.contains(dataUnit.id) }
+        return getDataListByDataType(dataType).dataUnits.filter { dataUnit -> dataUnit.id in ids }
     }
 
     override fun getDataListByDataType(dataType: DataType): DataList {
@@ -41,6 +41,6 @@ object LocalDataHandler : DataHandler {
         val dataType = newDataUnit.dataType
         val dataList = dataStore.getDataListByDataType(dataType)
         MergeDataUnitFactory.getMergeDataUnit(dataType).merge(dataList, newDataUnit)
-        return dataStore.updateDataList(dataList)
+        return dataStore.updateDataList(dataList, dataType)
     }
 }

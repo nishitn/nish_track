@@ -7,21 +7,18 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nishit.nishtrack.R
 import com.nishit.nishtrack.SelectionDialogFragment
-import com.nishit.nishtrack.data.DataHandler
-import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.datalist.Categories
+import com.nishit.nishtrack.dtos.dataunit.Category
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.InputType
+import com.nishit.nishtrack.util.DataUnitUtil
 import kotlinx.android.synthetic.main.update_field_item.view.*
 
 class CategoryRvAdapter(
-    private val categoriesDataList: Categories,
+    private val categoryList: List<Category>,
     private val dataTransferHelper: DataTransferHelper,
     private val supportFragmentManager: FragmentManager
 ) : RecyclerView.Adapter<CategoryRvAdapter.CategoryViewHolder>() {
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    private val dataHandler: DataHandler = LocalDataHandler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
@@ -42,15 +39,12 @@ class CategoryRvAdapter(
             }
 
             holder.itemView.setOnClickListener {
-                val allCategories = dataHandler.getDataListByDataType(categoriesDataList.dataType)
-                val currentCategoryIds = categoriesDataList.dataUnits.map { dataUnit -> dataUnit.id }.toSet()
-                val addableDataUnits =
-                    allCategories.dataUnits.filter { dataUnit -> !currentCategoryIds.contains(dataUnit.id) }
+                val addableDataUnits = DataUnitUtil.getRemainingBaseCategories(categoryList)
                 val selectionDialog = SelectionDialogFragment(InputType.CATEGORY, addableDataUnits, dataTransferHelper)
                 selectionDialog.show(supportFragmentManager, "SelectionDialog")
             }
         } else {
-            val dataUnit = categoriesDataList.dataUnits[position]
+            val dataUnit = categoryList[position]
             holder.itemView.apply {
                 updateFieldItemText.text = dataUnit.label
             }
@@ -62,6 +56,6 @@ class CategoryRvAdapter(
     }
 
     override fun getItemCount(): Int {
-        return categoriesDataList.dataUnits.size + 1
+        return categoryList.size + 1
     }
 }

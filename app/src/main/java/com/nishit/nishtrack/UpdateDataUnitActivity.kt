@@ -7,6 +7,8 @@ import com.nishit.nishtrack.dtos.DataId
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
 import com.nishit.nishtrack.updatedataunit.UpdateDataUnitFragment
+import com.nishit.nishtrack.updatedataunit.impl.UpdateAccountFragment
+import com.nishit.nishtrack.updatedataunit.impl.UpdateCategoryFragment
 import com.nishit.nishtrack.updatedataunit.impl.UpdateChapterFragment
 import com.nishit.nishtrack.updatedataunit.impl.UpdateTransactionFragment
 import com.nishit.nishtrack.util.BundleUtil
@@ -40,13 +42,14 @@ class UpdateDataUnitActivity : AppCompatActivity() {
 
     private fun setFrontLayerFragment(selectedDataId: DataId) {
         val updateDataUnitFragment: Fragment = when (val dataType = selectedDataId.dataType) {
-            DataType.Transaction -> UpdateTransactionFragment().apply {
-                arguments = UpdateDataUnitFragment.createBundle(selectedDataId)
-            }
-            DataType.Chapter -> UpdateChapterFragment().apply {
-                arguments = UpdateDataUnitFragment.createBundle(selectedDataId)
-            }
+            DataType.Transaction -> UpdateTransactionFragment()
+            DataType.Chapter -> UpdateChapterFragment()
+            DataType.Account -> UpdateAccountFragment()
+            DataType.Category -> UpdateCategoryFragment()
             else -> throw GeneratedException("Update Data Unit not supported for DataType $dataType")
+        }
+        updateDataUnitFragment.apply {
+            arguments = UpdateDataUnitFragment.createBundle(selectedDataId)
         }
 
         supportFragmentManager.beginTransaction().apply {

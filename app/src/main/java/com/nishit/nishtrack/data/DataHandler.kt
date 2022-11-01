@@ -10,7 +10,7 @@ interface DataHandler {
 
     fun getDataUnitOrNullById(id: DataId): DataUnit?
 
-    fun getDataUnitsById(ids: List<DataId>): List<DataUnit>
+    fun getDataUnitsByIds(ids: Collection<DataId>): List<DataUnit>
 
     fun getDataListByDataType(dataType: DataType): DataList
 

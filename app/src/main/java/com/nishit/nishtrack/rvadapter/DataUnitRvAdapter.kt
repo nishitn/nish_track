@@ -20,7 +20,7 @@ class DataUnitRvAdapter(private val dataType: DataType) : RecyclerView.Adapter<D
     private var dataList: DataList
 
     init {
-        dataList = getDataUnitList(dataType)
+        dataList = getDataListByDataType(dataType)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataUnitViewHolder {
@@ -47,10 +47,10 @@ class DataUnitRvAdapter(private val dataType: DataType) : RecyclerView.Adapter<D
     }
 
     fun updateDataUnits() {
-        dataList = getDataUnitList(dataType)
+        dataList = getDataListByDataType(dataType)
     }
 
-    private fun getDataUnitList(dataType: DataType): DataList {
+    private fun getDataListByDataType(dataType: DataType): DataList {
         return dataHandler.getDataListByDataType(dataType)
     }
 }

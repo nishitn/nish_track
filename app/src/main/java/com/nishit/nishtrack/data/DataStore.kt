@@ -6,5 +6,5 @@ import com.nishit.nishtrack.model.enums.DataType
 interface DataStore {
     fun getDataListByDataType(dataType: DataType): DataList
 
-    fun updateDataList(dataList: DataList): Boolean
+    fun updateDataList(dataList: DataList, dataType: DataType): Boolean
 }

@@ -39,8 +39,7 @@ class DayTransactionRvAdapter(
         val date = LocalDate.of(
             selectedYearMonth.year, selectedYearMonth.month, selectedYearMonth.lengthOfMonth() - position
         )
-        val daysTransactions =
-            transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }.toList()
+        val daysTransactions = transactions.filter { transaction -> transaction.date.dayOfMonth == date.dayOfMonth }
 
         if (daysTransactions.isEmpty()) {
             hideItem(holder)

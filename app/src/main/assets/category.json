@@ -3,6 +3,7 @@
         {
             "id": "cg_2ef4c7f9-0cf2-41de-8ef8-ed67ae53915c",
             "label": "Shopping",
+            "parentCategory": null,
             "hasCategories": [
                 "cg_3f13bee1-ae06-4cef-82d5-c2c16f38b2b9"
             ]
@@ -10,21 +11,25 @@
         {
             "id": "cg_3f13bee1-ae06-4cef-82d5-c2c16f38b2b9",
             "label": "Cosmetics",
+            "parentCategory": "cg_2ef4c7f9-0cf2-41de-8ef8-ed67ae53915c",
             "hasCategories": []
         },
         {
             "id": "cg_f0d16b11-8e37-42d3-8b7c-637f5a28e791",
             "label": "Maintenance",
+            "parentCategory": null,
             "hasCategories": []
         },
         {
             "id": "cg_17d36269-41a5-4ccb-abc1-ad0ea817a644",
             "label": "Delivery",
+            "parentCategory": null,
             "hasCategories": []
         },
         {
             "id": "cg_4986279d-6a69-4f31-a6cf-58eb6e00217",
             "label": "Travel",
+            "parentCategory": null,
             "hasCategories": [
                 "cg_a8c1069d-0901-419e-9693-01a0eeaa0c66"
             ]
@@ -32,16 +37,19 @@
         {
             "id": "cg_a8c1069d-0901-419e-9693-01a0eeaa0c66",
             "label": "Petrol",
+            "parentCategory": "cg_4986279d-6a69-4f31-a6cf-58eb6e00217",
             "hasCategories": []
         },
         {
             "id": "cg_6fa3bc0e-7d3e-4c16-8f68-3d90b8de9422",
             "label": "Recharge",
+            "parentCategory": null,
             "hasCategories": []
         },
         {
             "id": "cg_ea7bae82-5c81-42f7-99c9-7cadc96ef815",
             "label": "Eating Out",
+            "parentCategory": null,
             "hasCategories": []
         }
     ]

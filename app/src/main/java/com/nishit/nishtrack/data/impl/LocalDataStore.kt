@@ -88,8 +88,8 @@ object LocalDataStore : DataStore {
         }
     }
 
-    override fun updateDataList(dataList: DataList): Boolean {
-        val data = when (dataList.dataType) {
+    override fun updateDataList(dataList: DataList, dataType: DataType): Boolean {
+        val data = when (dataType) {
             DataType.Transaction -> gson.toJson(dataList, Transactions::class.java)
             DataType.Chapter -> gson.toJson(dataList, Chapters::class.java)
             DataType.Category -> gson.toJson(dataList, Categories::class.java)
@@ -97,6 +97,6 @@ object LocalDataStore : DataStore {
             DataType.User -> gson.toJson(dataList)
         }
 
-        return replaceFileForDataType(dataList.dataType, data)
+        return replaceFileForDataType(dataType, data)
     }
 }

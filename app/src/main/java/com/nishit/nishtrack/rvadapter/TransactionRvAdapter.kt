@@ -17,13 +17,11 @@ class TransactionRvAdapter(
 ) : RecyclerView.Adapter<TransactionRvAdapter.TransactionViewHolder>() {
     inner class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private val sortedTransactions: List<Transaction> =
-        transactionItems.sortedByDescending { transaction -> transaction.date }
+    private val sortedTransactions = transactionItems.sortedByDescending { transaction -> transaction.date }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         return TransactionViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.transaction_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.transaction_item, parent, false)
         )
     }
 
@@ -36,7 +34,8 @@ class TransactionRvAdapter(
 
     private fun setTransactionItemDetails(holder: TransactionViewHolder, transactionItem: Transaction) {
         holder.itemView.apply {
-            categoryTv.text = DataUnitUtil.getCategoryText(transactionItem.categories)
+            accountInfoTv.text = DataUnitUtil.getDataUnitText(transactionItem.account)
+            categoryTv.text = DataUnitUtil.getDataUnitText(transactionItem.category)
             noteTv.text = transactionItem.note
             currencyTv.text = transactionItem.currency.symbol
             amountTv.text = transactionItem.amount.toString()

@@ -11,7 +11,7 @@ data class Transaction(
     @SerializedName("date") val date: LocalDateTime,
     @SerializedName("chapter") val chapter: DataId,
     @SerializedName("account") val account: DataId,
-    @SerializedName("categories") val categories: List<DataId>,
+    @SerializedName("category") val category: DataId,
     @SerializedName("note") val note: String? = null,
     @SerializedName("currency") val currency: Currency,
     @SerializedName("amount") val amount: Double,

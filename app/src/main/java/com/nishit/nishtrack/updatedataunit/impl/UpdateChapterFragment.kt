@@ -8,7 +8,6 @@ import com.nishit.nishtrack.R
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
 import com.nishit.nishtrack.dtos.DataId
-import com.nishit.nishtrack.dtos.datalist.Categories
 import com.nishit.nishtrack.dtos.dataunit.Category
 import com.nishit.nishtrack.dtos.dataunit.Chapter
 import com.nishit.nishtrack.factory.DataListFactory
@@ -41,7 +40,7 @@ class UpdateChapterFragment : UpdateDataUnitFragment(R.layout.update_chapter) {
         if (dataUnit != null) {
             val chapter = dataUnit as Chapter
             inputDataMap[InputType.LABEL] = chapter.label
-            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitsById(chapter.hasCategories)
+            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitsByIds(chapter.hasCategories)
         }
     }
 
@@ -49,9 +48,9 @@ class UpdateChapterFragment : UpdateDataUnitFragment(R.layout.update_chapter) {
         val label = inputDataMap[InputType.LABEL] as String?
         if (label != null) chapterLabelRowET.setText(label)
 
-        val categories = Categories(getCategoryListFromInputMap())
+        val categoryList = getCategoryListFromInputMap()
         val categoryRvAdapter = CategoryRvAdapter(
-            categories, dataTransferHelper, requireActivity().supportFragmentManager
+            categoryList, dataTransferHelper, requireActivity().supportFragmentManager
         )
         chapterCategoryRowRV.apply {
             adapter = categoryRvAdapter
@@ -78,7 +77,7 @@ class UpdateChapterFragment : UpdateDataUnitFragment(R.layout.update_chapter) {
     private fun createChapter(chapterId: DataId): Chapter {
         val label = chapterLabelRowET.text.toString()
         val categories = getCategoryListFromInputMap()
-        val categoryIds = categories.map { dataUnit -> dataUnit.id }.toMutableList()
+        val categoryIds = categories.map { dataUnit -> dataUnit.id }.toMutableSet()
         return Chapter(chapterId, label, categoryIds)
     }
 
