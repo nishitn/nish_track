@@ -6,14 +6,15 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nishit.nishtrack.HomeBackDropActivity
 import com.nishit.nishtrack.data.DataStore
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
+import com.nishit.nishtrack.dtos.clearid.EntityId
 import com.nishit.nishtrack.dtos.datalist.*
 import com.nishit.nishtrack.extension.CurrencyTypeAdapter
 import com.nishit.nishtrack.extension.DataIdTypeAdapter
+import com.nishit.nishtrack.extension.EntityIdTypeAdapter
 import com.nishit.nishtrack.extension.LocalDateTimeTypeAdapter
 import com.nishit.nishtrack.model.enums.Currency
 import com.nishit.nishtrack.model.enums.DataType
-import com.nishit.nishtrack.model.exceptions.GeneratedException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
@@ -26,6 +27,7 @@ object LocalDataStore : DataStore {
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeTypeAdapter().nullSafe())
         .registerTypeAdapter(DataId::class.java, DataIdTypeAdapter().nullSafe())
+        .registerTypeAdapter(EntityId::class.java, EntityIdTypeAdapter().nullSafe())
         .registerTypeAdapter(Currency::class.java, CurrencyTypeAdapter().nullSafe())
         .create()
 
@@ -37,7 +39,8 @@ object LocalDataStore : DataStore {
             DataType.Chapter -> Paths.get(basePath.pathString, "chapter.json")
             DataType.Transaction -> Paths.get(basePath.pathString, "transaction.json")
             DataType.Account -> Paths.get(basePath.pathString, "account.json")
-            DataType.User -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
+            DataType.Group -> TODO()
+            DataType.User -> Paths.get(basePath.pathString, "user.json")
         }
 
         return path.pathString
@@ -84,7 +87,8 @@ object LocalDataStore : DataStore {
             DataType.Chapter -> gson.fromJson(jsonString, Chapters::class.java)
             DataType.Transaction -> gson.fromJson(jsonString, Transactions::class.java)
             DataType.Account -> gson.fromJson(jsonString, Accounts::class.java)
-            DataType.User -> throw GeneratedException("Data requested for invalid data type: ${dataType.name}")
+            DataType.Group -> TODO()
+            DataType.User -> gson.fromJson(jsonString, Users::class.java)
         }
     }
 
@@ -94,7 +98,8 @@ object LocalDataStore : DataStore {
             DataType.Chapter -> gson.toJson(dataList, Chapters::class.java)
             DataType.Category -> gson.toJson(dataList, Categories::class.java)
             DataType.Account -> gson.toJson(dataList, Accounts::class.java)
-            DataType.User -> gson.toJson(dataList)
+            DataType.Group -> TODO()
+            DataType.User -> gson.toJson(dataList, Users::class.java)
         }
 
         return replaceFileForDataType(dataType, data)

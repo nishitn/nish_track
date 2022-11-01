@@ -1,6 +1,6 @@
 package com.nishit.nishtrack.data
 
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.dtos.datalist.DataList
 import com.nishit.nishtrack.dtos.dataunit.DataUnit
 import com.nishit.nishtrack.model.enums.DataType

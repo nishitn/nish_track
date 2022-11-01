@@ -3,7 +3,8 @@ package com.nishit.nishtrack.extension
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
+import com.nishit.nishtrack.dtos.clearid.EntityId
 import com.nishit.nishtrack.model.enums.Currency
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -22,6 +23,15 @@ class DataIdTypeAdapter : TypeAdapter<DataId>() {
     override fun read(input: JsonReader): DataId = DataId(input.nextString())
 
     override fun write(out: JsonWriter, value: DataId) {
+        out.value(value.toString())
+    }
+}
+
+class EntityIdTypeAdapter : TypeAdapter<EntityId>() {
+
+    override fun read(input: JsonReader): EntityId = EntityId(input.nextString())
+
+    override fun write(out: JsonWriter, value: EntityId) {
         out.value(value.toString())
     }
 }

@@ -12,7 +12,10 @@ import com.nishit.nishtrack.R
 import com.nishit.nishtrack.SelectionDialogFragment
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.UserSupData
+import com.nishit.nishtrack.dtos.clearid.DataId
+import com.nishit.nishtrack.dtos.clearid.EntityId
+import com.nishit.nishtrack.dtos.clearid.UserId
 import com.nishit.nishtrack.dtos.dataunit.*
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.Currency
@@ -58,15 +61,16 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
             inputDataMap[InputType.CURRENCY] = Currency.INR
         } else {
             val transaction = dataUnit as Transaction
+            val supData = transaction.userSupData ?: throw GeneratedException("")
             inputDataMap[InputType.DATE] = transaction.date.toLocalDate()
             inputDataMap[InputType.TIME] = transaction.date.toLocalTime()
             inputDataMap[InputType.CURRENCY] = transaction.currency
             inputDataMap[InputType.AMOUNT] = transaction.amount
             inputDataMap[InputType.NOTE] = transaction.note
             inputDataMap[InputType.DESCRIPTION] = transaction.description
-            inputDataMap[InputType.CHAPTER] = dataHandler.getDataUnitById(transaction.chapter)
-            inputDataMap[InputType.ACCOUNT] = dataHandler.getDataUnitById(transaction.account)
-            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitById(transaction.category)
+            inputDataMap[InputType.CHAPTER] = dataHandler.getDataUnitById(supData.chapter)
+            inputDataMap[InputType.ACCOUNT] = dataHandler.getDataUnitById(supData.account)
+            inputDataMap[InputType.CATEGORY] = dataHandler.getDataUnitById(supData.category)
         }
     }
 
@@ -163,7 +167,8 @@ class UpdateTransactionFragment : UpdateDataUnitFragment(R.layout.update_transac
         val description = descriptionRowET.text.toString()
 
         return Transaction(
-            transactionId, dateTime, chapter.id, account.id, category.id, note, currency, amount, description
+            transactionId, dateTime, currency, amount, note, description,
+            UserSupData(UserId(DataType.User), chapter.id, account.id, category.id)
         )
     }
 

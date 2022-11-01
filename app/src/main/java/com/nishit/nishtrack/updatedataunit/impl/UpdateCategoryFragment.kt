@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nishit.nishtrack.R
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.dtos.dataunit.Category
-import com.nishit.nishtrack.factory.DataListFactory
 import com.nishit.nishtrack.helper.DataTransferHelper
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.enums.InputType
@@ -17,6 +16,7 @@ import com.nishit.nishtrack.model.exceptions.GeneratedException
 import com.nishit.nishtrack.rvadapter.CategoryRvAdapter
 import com.nishit.nishtrack.updatedataunit.UpdateDataUnitFragment
 import com.nishit.nishtrack.util.BundleUtil
+import com.nishit.nishtrack.util.DataUnitUtil
 import kotlinx.android.synthetic.main.update_category.*
 
 class UpdateCategoryFragment : UpdateDataUnitFragment(R.layout.update_category) {
@@ -86,7 +86,7 @@ class UpdateCategoryFragment : UpdateDataUnitFragment(R.layout.update_category) 
 
     private fun getCategoryListFromInputMap(): MutableList<Category> {
         val categories = inputDataMap[InputType.CATEGORY] as List<*>? ?: listOf<Category>()
-        return DataListFactory.mutableListOf(categories)
+        return DataUnitUtil.convertToMutableList(categories)
     }
 
     private val dataTransferHelper = object : DataTransferHelper {

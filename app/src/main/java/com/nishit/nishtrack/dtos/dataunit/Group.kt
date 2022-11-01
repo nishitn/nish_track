@@ -4,10 +4,9 @@ import com.google.gson.annotations.SerializedName
 import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.model.enums.DataType
 
-data class Chapter(
+data class Group(
     @SerializedName("id") override val id: DataId,
     @SerializedName("label") override val label: String,
-    @SerializedName("hasCategories") val hasCategories: MutableSet<DataId> = mutableSetOf()
-) : DataUnit {
-    override val dataType = DataType.Chapter
+) : Entity {
+    override val dataType: DataType = DataType.Group
 }

@@ -1,7 +1,7 @@
 package com.nishit.nishtrack.util
 
 import android.os.Bundle
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.model.enums.DataType
 import java.time.YearMonth
 

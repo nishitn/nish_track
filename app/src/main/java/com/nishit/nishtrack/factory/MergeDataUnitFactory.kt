@@ -12,7 +12,7 @@ class MergeDataUnitFactory {
                 DataType.Category -> CategoryMergeUnit
                 DataType.Chapter -> ChapterMergeUnit
                 DataType.Account -> AccountMergeUnit
-                DataType.User -> throw GeneratedException("")
+                else -> throw GeneratedException("")
             }
         }
     }

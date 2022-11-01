@@ -28,8 +28,4 @@ class SettingsFragment : Fragment(R.layout.settings) {
             startActivity(intent)
         }
     }
-
-    companion object {
-        private const val TAG = "SettingsFragment"
-    }
 }

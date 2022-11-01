@@ -2,7 +2,7 @@ package com.nishit.nishtrack.util
 
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.dtos.datalist.Categories
 import com.nishit.nishtrack.dtos.dataunit.Category
 import com.nishit.nishtrack.dtos.dataunit.Chapter
@@ -21,8 +21,8 @@ class DataUnitUtil {
             val categoryNames = mutableListOf<String>()
             var currentId: DataId? = categoryId
             while (currentId != null) {
-                val currentUnit = allCategories.dataUnits.firstOrNull { it.id == currentId }
-                    ?: throw GeneratedException("")
+                val currentUnit =
+                    allCategories.dataUnits.firstOrNull { it.id == currentId } ?: throw GeneratedException("")
                 categoryNames.add(0, currentUnit.label)
                 currentId = currentUnit.parentCategory
             }
@@ -32,16 +32,16 @@ class DataUnitUtil {
         fun getDataUnitText(dataUnit: DataUnit): String {
             return when (dataUnit.id.dataType) {
                 DataType.Category -> getCategoryText(dataUnit.id)
-                DataType.Account, DataType.Chapter, DataType.Transaction, DataType.User -> dataUnit.label
+                DataType.Account, DataType.Chapter, DataType.Transaction, DataType.User, DataType.Group ->
+                    dataUnit.label
             }
         }
 
         fun getDataUnitText(dataId: DataId): String {
             return when (dataId.dataType) {
                 DataType.Category -> getCategoryText(dataId)
-                DataType.Account, DataType.Chapter, DataType.Transaction, DataType.User -> dataHandler.getDataUnitById(
-                    dataId
-                ).label
+                DataType.Account, DataType.Chapter, DataType.Transaction, DataType.User, DataType.Group ->
+                    dataHandler.getDataUnitById(dataId).label
             }
         }
 
@@ -67,5 +67,12 @@ class DataUnitUtil {
         }
 
         private fun isBaseCategory(category: Category) = category.parentCategory == null
+
+        inline fun <reified T : DataUnit> convertToMutableList(inputList: List<*>): MutableList<T> {
+            if (inputList.any { it !is T }) {
+                throw GeneratedException("")
+            }
+            return inputList.map { dataUnit -> dataUnit as T }.toMutableList()
+        }
     }
 }

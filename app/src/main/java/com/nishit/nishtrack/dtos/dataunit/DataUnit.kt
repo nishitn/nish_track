@@ -1,6 +1,6 @@
 package com.nishit.nishtrack.dtos.dataunit
 
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.model.enums.DataType
 
 sealed interface DataUnit {

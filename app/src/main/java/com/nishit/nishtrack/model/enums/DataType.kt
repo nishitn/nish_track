@@ -7,6 +7,7 @@ enum class DataType(val shortId: String) {
     Chapter("ch"),
     Category("cg"),
     Account("ac"),
+    Group("gr"),
     User("us");
 
     companion object {

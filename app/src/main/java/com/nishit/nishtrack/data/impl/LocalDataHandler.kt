@@ -2,7 +2,7 @@ package com.nishit.nishtrack.data.impl
 
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.DataStore
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.dtos.datalist.DataList
 import com.nishit.nishtrack.dtos.dataunit.DataUnit
 import com.nishit.nishtrack.factory.MergeDataUnitFactory

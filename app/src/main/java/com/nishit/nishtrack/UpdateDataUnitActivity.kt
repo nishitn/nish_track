@@ -3,7 +3,7 @@ package com.nishit.nishtrack
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.exceptions.GeneratedException
 import com.nishit.nishtrack.updatedataunit.UpdateDataUnitFragment

@@ -1,9 +1,9 @@
-package com.nishit.nishtrack.dtos
+package com.nishit.nishtrack.dtos.clearid
 
 import com.nishit.nishtrack.model.enums.DataType
 import java.util.*
 
-class DataId {
+open class ClearId {
     val dataType: DataType
     val guid: UUID
 

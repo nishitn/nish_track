@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.nishit.nishtrack.R
 import com.nishit.nishtrack.data.DataHandler
 import com.nishit.nishtrack.data.impl.LocalDataHandler
-import com.nishit.nishtrack.dtos.DataId
+import com.nishit.nishtrack.dtos.clearid.DataId
 import com.nishit.nishtrack.dtos.dataunit.Account
 import com.nishit.nishtrack.model.enums.DataType
 import com.nishit.nishtrack.model.enums.InputType
